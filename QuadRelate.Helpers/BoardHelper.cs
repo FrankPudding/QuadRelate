@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace QuadRelate.Helpers
 {
-    public class BoardHelper
+    public static class BoardHelper
     {
-        public List<int> AvailableColumns(Board board)
+        public static List<int> AvailableColumns(this Board board)
         {
             var availableColumns = new List<int>();
 
@@ -18,6 +18,17 @@ namespace QuadRelate.Helpers
             }
 
             return availableColumns;
+        }
+
+        public static void Fill(this Board board, Cell colour)
+        {
+            for (var x = 0; x < Board.Width; x++)
+            {
+                for (var y = 0; y < Board.Height; y++)
+                {
+                    board[x, y] = colour;
+                }
+            }
         }
     }
 }
