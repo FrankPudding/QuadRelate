@@ -83,5 +83,59 @@ namespace QuadRelate.Tests
 
             Assert.Equal(expected, _board.AvailableColumns());
         }
+
+        [Fact]
+        public void IsGameOver_ForEmptyBoard_ReturnsFalse()
+        {
+            Assert.False(_board.IsGameOver());
+        }
+
+        [Fact]
+        public void IsGameOver_ForHorizontalBottomLeft_ReturnsTrue()
+        {
+            // Place counters in the first four columns of the bottom row
+            for (var x = 0; x < 4; x++)
+            {
+                _board[x, 0] = Cell.Red;
+            }
+
+            Assert.True(_board.IsGameOver());
+        }
+
+        [Fact]
+        public void IsGameOver_ForHorizontalTopRight_ReturnsTrue()
+        {
+            // Place counters in the first four columns of the bottom row
+            for (var x = 3; x <= 6; x++)
+            {
+                _board[x, 5] = Cell.Red;
+            }
+
+            Assert.True(_board.IsGameOver());
+        }
+
+        [Fact]
+        public void IsGameOver_ForVerticalBottomLeft_ReturnsTrue()
+        {
+            // Place counters in the first four columns of the bottom row
+            for (var y = 0; y < 4; y++)
+            {
+                _board[0, y] = Cell.Yellow;
+            }
+
+            Assert.True(_board.IsGameOver());
+        }
+
+        [Fact]
+        public void IsGameOver_ForVerticaltopRight_ReturnsTrue()
+        {
+            // Place counters in the first four columns of the bottom row
+            for (var y = 2; y <= 5; y++)
+            {
+                _board[0, y] = Cell.Yellow;
+            }
+
+            Assert.True(_board.IsGameOver());
+        }
     }
 }

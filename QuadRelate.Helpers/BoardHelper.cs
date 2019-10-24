@@ -25,6 +25,9 @@ namespace QuadRelate.Helpers
             // Check for horizontal wins
             for (var y = 0; y < Board.Height; y++)
             {
+                if (board[3, y] == Cell.Empty)
+                    continue;
+
                 // Check left
                 if (board[3, y] == board[2, y] && board[2, y] == board[1, y] && board[1, y] == board[0, y])
                 {
@@ -41,6 +44,9 @@ namespace QuadRelate.Helpers
             // Check for vertical wins
             for (var x = 0; x < Board.Width; x++)
             {
+                if (board[x, 2] == Cell.Empty)
+                    continue;
+
                 if (board[x, 2] == board[x, 3])
                 {
                     // Check down
@@ -60,6 +66,9 @@ namespace QuadRelate.Helpers
             // Check bottom half diagonals
             for (var y = 0; y < Board.Height / 2; y++)
             {
+                if (board[3, y] == Cell.Empty)
+                    continue;
+
                 // Check left-up
                 if (board[3, y] == board[2, y + 1] && board[2, y + 1] == board[1, y + 2] && board[1, y + 2] == board[0, y + 3])
                 {
@@ -74,8 +83,11 @@ namespace QuadRelate.Helpers
             }
 
             // Check top half diagonals
-            for (var y = Board.Height; y >= Board.Height / 2; y--)
+            for (var y = Board.Height - 1; y >= Board.Height / 2; y--)
             {
+                if (board[3, y] == Cell.Empty)
+                    continue;
+
                 // Check left-down
                 if (board[3, y] == board[2, y - 1] && board[2, y - 1] == board[1, y - 2] && board[1, y - 2] == board[0, y - 3])
                 {
