@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuadRelate.Contracts", "Qua
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuadRelate.Helpers", "QuadRelate.Helpers\QuadRelate.Helpers.csproj", "{0B38FD8C-FEB0-44A4-BA8C-9485B0D9CCE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadRelate.CPUPlayers", "CPUPlayers\QuadRelate.CPUPlayers.csproj", "{948C8C35-8A3F-4423-B504-8437549123D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadRelate.Models", "QuadRelate.Models\QuadRelate.Models.csproj", "{4FC72C1C-6BAF-47DF-B3BF-C568E11F7171}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{0B38FD8C-FEB0-44A4-BA8C-9485B0D9CCE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B38FD8C-FEB0-44A4-BA8C-9485B0D9CCE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B38FD8C-FEB0-44A4-BA8C-9485B0D9CCE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{948C8C35-8A3F-4423-B504-8437549123D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{948C8C35-8A3F-4423-B504-8437549123D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{948C8C35-8A3F-4423-B504-8437549123D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{948C8C35-8A3F-4423-B504-8437549123D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC72C1C-6BAF-47DF-B3BF-C568E11F7171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC72C1C-6BAF-47DF-B3BF-C568E11F7171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC72C1C-6BAF-47DF-B3BF-C568E11F7171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC72C1C-6BAF-47DF-B3BF-C568E11F7171}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,8 +16,20 @@ namespace QuadRelateApp
 
             board.Fill(Cell.Empty);
 
-            for (var i = 0; i < 42; i++)
+            boardDrawer.DrawBoard(board);
+
+            Console.ReadKey();
+
+            board.PlaceCounter(player.NextMove(board), Cell.Red);
+
+            for (var i = 0; i < 21; i++)
             {
+                boardDrawer.DrawBoard(board);
+
+                Console.ReadKey();
+
+                board.PlaceCounter(player.NextMove(board), Cell.Yellow);
+
                 boardDrawer.DrawBoard(board);
 
                 Console.ReadKey();
