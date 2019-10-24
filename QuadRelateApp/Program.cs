@@ -1,4 +1,5 @@
-﻿using QuadRelate.Externals;
+﻿using CPUPlayers;
+using QuadRelate.Externals;
 using QuadRelate.Helpers;
 using QuadRelate.Types;
 using System;
@@ -10,13 +11,19 @@ namespace QuadRelateApp
         static void Main()
         {
             var board = new Board();
-            BoardDrawerConsole boardDrawer = new BoardDrawerConsole();
+            var boardDrawer = new BoardDrawerConsole();
+            var player = new CPUPlayerRandom();
 
-            board.Fill(Cell.Red);
+            board.Fill(Cell.Empty);
 
-            boardDrawer.DrawBoard(board);
+            for (var i = 0; i < 42; i++)
+            {
+                boardDrawer.DrawBoard(board);
 
-            Console.ReadKey();
+                Console.ReadKey();
+
+                board.PlaceCounter(player.NextMove(board), Cell.Red);
+            }
         }
     }
 }

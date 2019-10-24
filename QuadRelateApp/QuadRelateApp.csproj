@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CPUPlayers\QuadRelate.CPUPlayers.csproj" />
     <ProjectReference Include="..\QuadRelate.Externals\QuadRelate.Externals.csproj" />
     <ProjectReference Include="..\QuadRelate.Helpers\QuadRelate.Helpers.csproj" />
     <ProjectReference Include="..\QuadRelate.Types\QuadRelate.Types.csproj" />
