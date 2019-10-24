@@ -1,4 +1,5 @@
 ﻿using QuadRelate.Externals;
+using QuadRelate.Helpers;
 using QuadRelate.Types;
 using System;
 
@@ -11,13 +12,7 @@ namespace QuadRelateApp
             var board = new Board();
             BoardDrawerConsole boardDrawer = new BoardDrawerConsole();
 
-            for (var y = 0; y < Board.Height; y++)
-            {
-                for (var x = 0; x < Board.Width; x++)
-                {
-                    board.PlaceCounter(x, Cell.Red);
-                }
-            }
+            board.Fill(Cell.Red);
 
             boardDrawer.DrawBoard(board);
 
