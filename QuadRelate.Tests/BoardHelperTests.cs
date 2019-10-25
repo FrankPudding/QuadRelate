@@ -85,8 +85,16 @@ namespace QuadRelate.Tests
         }
 
         [Fact]
+        public void IsGameOver_ForNewBoard_ReturnsFalse()
+        {
+            Assert.False(_board.IsGameOver());
+        }
+
+        [Fact]
         public void IsGameOver_ForEmptyBoard_ReturnsFalse()
         {
+            _board.Fill(Cell.Empty);
+
             Assert.False(_board.IsGameOver());
         }
 
@@ -94,10 +102,10 @@ namespace QuadRelate.Tests
         public void IsGameOver_ForHorizontalBottomLeft_ReturnsTrue()
         {
             // Place counters in the first four columns of the bottom row
-            for (var x = 0; x < 4; x++)
-            {
-                _board[x, 0] = Cell.Red;
-            }
+            _board[0, 0] = Cell.Red;
+            _board[1, 0] = Cell.Red;
+            _board[2, 0] = Cell.Red;
+            _board[3, 0] = Cell.Red;
 
             Assert.True(_board.IsGameOver());
         }
@@ -105,11 +113,11 @@ namespace QuadRelate.Tests
         [Fact]
         public void IsGameOver_ForHorizontalTopRight_ReturnsTrue()
         {
-            // Place counters in the first four columns of the bottom row
-            for (var x = 3; x <= 6; x++)
-            {
-                _board[x, 5] = Cell.Red;
-            }
+            // Place counters in the last four columns of the top row
+            _board[3, 5] = Cell.Red;
+            _board[4, 5] = Cell.Red;
+            _board[5, 5] = Cell.Red;
+            _board[6, 5] = Cell.Red;
 
             Assert.True(_board.IsGameOver());
         }
@@ -117,11 +125,11 @@ namespace QuadRelate.Tests
         [Fact]
         public void IsGameOver_ForVerticalBottomLeft_ReturnsTrue()
         {
-            // Place counters in the first four columns of the bottom row
-            for (var y = 0; y < 4; y++)
-            {
-                _board[0, y] = Cell.Yellow;
-            }
+            // Place counters in the first four rows of the leftmost column
+            _board[0, 0] = Cell.Yellow;
+            _board[0, 1] = Cell.Yellow;
+            _board[0, 2] = Cell.Yellow;
+            _board[0, 3] = Cell.Yellow;
 
             Assert.True(_board.IsGameOver());
         }
@@ -129,11 +137,11 @@ namespace QuadRelate.Tests
         [Fact]
         public void IsGameOver_ForVerticaltopRight_ReturnsTrue()
         {
-            // Place counters in the first four columns of the bottom row
-            for (var y = 2; y <= 5; y++)
-            {
-                _board[0, y] = Cell.Yellow;
-            }
+            // Place counters in the top four rows of the rightmost column
+            _board[0, 2] = Cell.Yellow;
+            _board[0, 3] = Cell.Yellow;
+            _board[0, 4] = Cell.Yellow;
+            _board[0, 5] = Cell.Yellow;
 
             Assert.True(_board.IsGameOver());
         }
