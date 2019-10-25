@@ -20,9 +20,8 @@ namespace QuadRelate.Helpers
             return availableColumns;
         }
 
-        public static bool IsGameOver(this Board board)
+        private static bool DoesHorizontalWinExist(this Board board)
         {
-            // Check for horizontal wins
             for (var y = 0; y < Board.Height; y++)
             {
                 if (board[3, y] == Cell.Empty)
@@ -41,7 +40,11 @@ namespace QuadRelate.Helpers
                 }
             }
 
-            // Check for vertical wins
+            return false;
+        }
+
+        private static bool DoesVerticalWinExist(this Board board)
+        {
             for (var x = 0; x < Board.Width; x++)
             {
                 if (board[x, 2] == Cell.Empty)
@@ -63,6 +66,11 @@ namespace QuadRelate.Helpers
                 }
             }
 
+            return false;
+        }
+
+        private static bool DoesDiagonalWinExist(this Board board)
+        {
             // Check bottom half diagonals
             for (var y = 0; y < Board.Height / 2; y++)
             {
@@ -94,7 +102,7 @@ namespace QuadRelate.Helpers
                     return true;
                 }
 
-                // Check right- down
+                // Check right-down
                 if (board[3, y] == board[4, y - 1] && board[4, y - 1] == board[5, y - 2] && board[5, y - 2] == board[6, y - 3])
                 {
                     return true;
@@ -102,6 +110,11 @@ namespace QuadRelate.Helpers
             }
 
             return false;
+        }
+
+        public static bool IsGameOver(this Board board)
+        {
+            return board.DoesHorizontalWinExist() || board.DoesVerticalWinExist() || board.DoesDiagonalWinExist();
         }
 
         public static void Fill(this Board board, Cell colour)
