@@ -118,10 +118,10 @@ namespace QuadRelate.Tests
         }
 
         [Theory]
-        [InlineData(0, 0)] // Left Column
+        [InlineData(0, 0)] // Left column
         [InlineData(0, 1)]
         [InlineData(0, 2)]
-        [InlineData(6, 0)] // Right row
+        [InlineData(6, 0)] // Right column
         [InlineData(6, 1)]
         [InlineData(6, 2)]
         public void IsGameOver_ForVerticalWin_ReturnsTrue(int x, int yStart)

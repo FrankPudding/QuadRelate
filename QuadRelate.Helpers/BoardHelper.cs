@@ -29,42 +29,16 @@ namespace QuadRelate.Helpers
                 if (board[3, y] == Cell.Empty)
                     continue;
 
-                inARowCount++;
-
-                // Check left
-                if (board[2, y] == board[3, y])
+                for (var x = 0; x < Board.Width; x++)
                 {
-                    inARowCount++;
-
-                    if (board[1, y] == board[3, y])
-                    {
+                    if (board[x, y] == board[3, y])
                         inARowCount++;
+                    else
+                        inARowCount = 0;
 
-                        if (board[0, y] == board[3, y])
-                        {
-                            inARowCount++;
-                        }
-                    }
+                    if (inARowCount == 4)
+                        return true;
                 }
-
-                // Check right
-                if (board[4, y] == board[3, y])
-                {
-                    inARowCount++;
-
-                    if (board[5, y] == board[3, y])
-                    {
-                        inARowCount++;
-
-                        if (board[6, y] == board[3, y])
-                        {
-                            inARowCount++;
-                        }
-                    }
-                }
-
-                if (inARowCount >= 4)
-                    return true;
             }
 
             return false;
@@ -76,36 +50,19 @@ namespace QuadRelate.Helpers
             {
                 var inARowCount = 0;
 
-                if (board[x, 2] == Cell.Empty)
+                if (board[x, 2] != board[x, 3] || board[x, 2] == Cell.Empty)
                     continue;
 
-                inARowCount++;
-
-                if (board[x, 2] != board[x, 3])
-                    continue;
-
-                inARowCount++;
-
-                // Check down
-                if (board[x, 1] == board[x, 2])
+                for (var y = 0; y < Board.Height; y++)
                 {
-                    inARowCount++;
-
-                    if (board[x, 0] == board[x, 2])
+                    if (board[x, y] == board[x, 2])
                         inARowCount++;
+                    else
+                        inARowCount = 0;
+
+                    if (inARowCount == 4)
+                        return true;
                 }
-
-                // Check up
-                if (board[x, 4] == board[x, 3])
-                {
-                    inARowCount++;
-
-                    if (board[x, 5] == board[x, 3])
-                        inARowCount++;
-                }
-
-                if (inARowCount >= 4)
-                    return true;
             }
 
             return false;
@@ -113,114 +70,24 @@ namespace QuadRelate.Helpers
 
         private static bool DoesDiagonalWinExist(this Board board)
         {
-            for (var y = 0; y < Board.Height; y++)
+            // Check North-East
+            for (var x = 0; x < Board.Width - 3; x++)
             {
-                var inARowCount = 0;
-
-                if (board[3, y] == Cell.Empty)
-                    continue;
-
-                inARowCount++;
-
-                // Check North East
-                if (y < Board.Height - 1)
+                for (var y = 0; y < Board.Height - 3; y++)
                 {
-                    if (board[4, y + 1] == board[3, y])
-                    {
-                        inARowCount++;
-
-                        if (y < Board.Height - 2)
-                        {
-                            if (board[5, y + 2] == board[3, y])
-                            {
-                                inARowCount++;
-
-                                if (y < Board.Height - 3)
-                                {
-                                    if (board[6, y + 3] == board[3, y])
-                                        inARowCount++;
-                                }
-                            }
-                        }
-                    }
+                    if (board[x, y] != Cell.Empty && board[x + 1, y + 1] == board[x, y] && board[x + 2, y + 2] == board[x, y] && board[x + 3, y + 3] == board[x, y])
+                        return true;
                 }
+            }
 
-                // Check South West
-                if (y > 0)
+            // Check North-West
+            for (var x = 0; x < Board.Width - 3; x++)
+            {
+                for (var y = 3; y < Board.Height; y++)
                 {
-                    if (board[2, y - 1] == board[3, y])
-                    {
-                        inARowCount++;
-
-                        if (y > 1)
-                        {
-                            if (board[1, y - 2] == board[3, y])
-                            {
-                                inARowCount++;
-
-                                if (y > 2)
-                                {
-                                    if (board[0, y - 3] == board[3, y])
-                                        inARowCount++;
-                                }
-                            }
-                        }
-                    }
+                    if (board[x, y] != Cell.Empty && board[x + 1, y - 1] == board[x, y] && board[x + 2, y - 2] == board[x, y] && board[x + 3, y - 3] == board[x, y])
+                        return true;
                 }
-
-                if (inARowCount >= 4)
-                    return true;
-
-                inARowCount = 1;
-
-                // Check North West diagonals
-                if (y < Board.Height - 1)
-                {
-                    if (board[2, y + 1] == board[3, y])
-                    {
-                        inARowCount++;
-
-                        if (y < Board.Height - 2)
-                        {
-                            if (board[1, y + 2] == board[3, y])
-                            {
-                                inARowCount++;
-
-                                if (y < Board.Height - 3)
-                                {
-                                    if (board[0, y + 3] == board[3, y])
-                                        inARowCount++;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Check South-East
-                if (y > 0)
-                {
-                    if (board[4, y - 1] == board[3, y])
-                    {
-                        inARowCount++;
-
-                        if (y > 1)
-                        {
-                            if (board[5, y - 2] == board[3, y])
-                            {
-                                inARowCount++;
-
-                                if (y > 2)
-                                {
-                                    if (board[6, y - 3] == board[3, y])
-                                        inARowCount++;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (inARowCount >= 4)
-                    return true;
             }
 
             return false;
