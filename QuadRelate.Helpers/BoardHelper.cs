@@ -24,19 +24,20 @@ namespace QuadRelate.Helpers
         {
             for (var y = 0; y < Board.Height; y++)
             {
+                var inARowCount = 0;
+
                 if (board[3, y] == Cell.Empty)
                     continue;
 
-                // Check left
-                if (board[3, y] == board[2, y] && board[2, y] == board[1, y] && board[1, y] == board[0, y])
+                for (var x = 0; x < Board.Width; x++)
                 {
-                    return true;
-                }
+                    if (board[x, y] == board[3, y])
+                        inARowCount++;
+                    else
+                        inARowCount = 0;
 
-                // Check right
-                if (board[3, y] == board[4, y] && board[4, y] == board[5, y] && board[5, y] == board[6, y])
-                {
-                    return true;
+                    if (inARowCount == 4)
+                        return true;
                 }
             }
 
@@ -47,22 +48,20 @@ namespace QuadRelate.Helpers
         {
             for (var x = 0; x < Board.Width; x++)
             {
-                if (board[x, 2] == Cell.Empty)
+                var inARowCount = 0;
+
+                if (board[x, 2] != board[x, 3] || board[x, 2] == Cell.Empty)
                     continue;
 
-                if (board[x, 2] == board[x, 3])
+                for (var y = 0; y < Board.Height; y++)
                 {
-                    // Check down
-                    if (board[x, 2] == board[x, 1] && board[x, 1] == board[x, 0])
-                    {
-                        return true;
-                    }
+                    if (board[x, y] == board[x, 2])
+                        inARowCount++;
+                    else
+                        inARowCount = 0;
 
-                    // Check up
-                    if (board[x, 3] == board[x, 4] && board[x, 4] == board[x, 5])
-                    {
+                    if (inARowCount == 4)
                         return true;
-                    }
                 }
             }
 
@@ -71,41 +70,23 @@ namespace QuadRelate.Helpers
 
         private static bool DoesDiagonalWinExist(this Board board)
         {
-            // Check bottom half diagonals
-            for (var y = 0; y < Board.Height / 2; y++)
+            // Check North-East
+            for (var x = 0; x < Board.Width - 3; x++)
             {
-                if (board[3, y] == Cell.Empty)
-                    continue;
-
-                // Check left-up
-                if (board[3, y] == board[2, y + 1] && board[2, y + 1] == board[1, y + 2] && board[1, y + 2] == board[0, y + 3])
+                for (var y = 0; y < Board.Height - 3; y++)
                 {
-                    return true;
-                }
-
-                // Check right-up
-                if (board[3, y] == board[4, y + 1] && board[4, y + 1] == board[5, y + 2] && board[5, y + 2] == board[6, y + 3])
-                {
-                    return true;
+                    if (board[x, y] != Cell.Empty && board[x + 1, y + 1] == board[x, y] && board[x + 2, y + 2] == board[x, y] && board[x + 3, y + 3] == board[x, y])
+                        return true;
                 }
             }
 
-            // Check top half diagonals
-            for (var y = Board.Height - 1; y >= Board.Height / 2; y--)
+            // Check North-West
+            for (var x = 0; x < Board.Width - 3; x++)
             {
-                if (board[3, y] == Cell.Empty)
-                    continue;
-
-                // Check left-down
-                if (board[3, y] == board[2, y - 1] && board[2, y - 1] == board[1, y - 2] && board[1, y - 2] == board[0, y - 3])
+                for (var y = 3; y < Board.Height; y++)
                 {
-                    return true;
-                }
-
-                // Check right-down
-                if (board[3, y] == board[4, y - 1] && board[4, y - 1] == board[5, y - 2] && board[5, y - 2] == board[6, y - 3])
-                {
-                    return true;
+                    if (board[x, y] != Cell.Empty && board[x + 1, y - 1] == board[x, y] && board[x + 2, y - 2] == board[x, y] && board[x + 3, y - 3] == board[x, y])
+                        return true;
                 }
             }
 
