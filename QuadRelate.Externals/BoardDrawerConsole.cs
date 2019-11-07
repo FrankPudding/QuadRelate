@@ -14,11 +14,15 @@ namespace QuadRelate.Externals
             {
                 if (y != -1)
                 {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write("|");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write("-");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
 
                 for (var x = 0; x < Board.Width; x++)
@@ -32,26 +36,40 @@ namespace QuadRelate.Externals
                                 break;
 
                             case Cell.Red:
-                                Console.Write("R");
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.Write('\u20DD');
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
 
                             case Cell.Yellow:
-                                Console.Write("Y");
+                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.Write('\u20DD');
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
                         }
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("-");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     }
 
                     if (y != -1)
                     {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("|");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("-");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     }
                 }
 
