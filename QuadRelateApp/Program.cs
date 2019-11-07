@@ -1,5 +1,4 @@
 ﻿using QuadRelate.Externals;
-using QuadRelate.Helpers;
 using QuadRelate.Models;
 using QuadRelate.Types;
 using System;

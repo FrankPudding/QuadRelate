@@ -5,16 +5,16 @@
         public static readonly int Width = 7;
         public static readonly int Height = 6;
 
-        public Cell[,] Position = new Cell[Width, Height];
+        private readonly Cell[,] _position = new Cell[Width, Height];
 
         public Cell this[int x, int y]
         {
             get
             {
-                return Position[x, y];
+                return _position[x, y];
             }
 
-            set => Position[x, y] = value;
+            set => _position[x, y] = value;
         }
 
         public void PlaceCounter(int column, Cell counter)

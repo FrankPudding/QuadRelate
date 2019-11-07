@@ -1,5 +1,5 @@
 ﻿using Moq;
-using QuadRelate.Helpers;
+using QuadRelate.Models;
 using QuadRelate.Types;
 using System.Collections.Generic;
 using Xunit;

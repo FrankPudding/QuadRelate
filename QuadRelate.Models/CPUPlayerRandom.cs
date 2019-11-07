@@ -1,5 +1,4 @@
 ﻿using QuadRelate.Contracts;
-using QuadRelate.Helpers;
 using QuadRelate.Types;
 using System;
 
@@ -7,7 +6,7 @@ namespace QuadRelate.Models
 {
     public class CPUPlayerRandom : ICPUPlayer
     {
-        private Random _randomNumber;
+        private readonly Random _randomNumber;
 
         public CPUPlayerRandom()
         {
