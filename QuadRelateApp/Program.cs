@@ -12,7 +12,9 @@ namespace QuadRelateApp
         {
             var board = new Board();
             var boardDrawer = new BoardDrawerConsole();
-            var player = new CPUPlayerRandom();
+            var factory = new CPUPlayerFactory();
+            var playerOne = factory.CreateCPUPlayer(nameof(CPUPlayerRandom));
+            var playerTwo = factory.CreateCPUPlayer(nameof(CPUPlayerRandom));
 
             board.Fill(Cell.Empty);
             boardDrawer.DrawBoard(board);
@@ -21,23 +23,41 @@ namespace QuadRelateApp
             {
                 Console.ReadKey();
 
-                board.PlaceCounter(player.NextMove(board), Cell.Yellow);
+                var move = playerOne.NextMove(board.Clone(), Cell.Yellow);
+                board.PlaceCounter(move, Cell.Yellow);
                 boardDrawer.DrawBoard(board);
 
                 if (board.IsGameOver())
                 {
-                    Console.WriteLine("\nYELLOW WINS!");
+                    if(board.DoesWinnerExist())
+                    {
+                        Console.WriteLine("\nYELLOW WINS!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nDRAW!");
+                    }
+                    
                     break;
                 }
 
                 Console.ReadKey();
 
-                board.PlaceCounter(player.NextMove(board), Cell.Red);
+                move = playerTwo.NextMove(board.Clone(), Cell.Red);
+                board.PlaceCounter(move, Cell.Red);
                 boardDrawer.DrawBoard(board);
 
                 if (board.IsGameOver())
                 {
-                    Console.WriteLine("\nRED WINS!");
+                    if (board.DoesWinnerExist())
+                    {
+                        Console.WriteLine("\nRED WINS!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nDRAW!");
+                    }
+
                     break;
                 }
             }

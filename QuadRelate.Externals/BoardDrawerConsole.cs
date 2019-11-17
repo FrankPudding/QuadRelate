@@ -29,7 +29,7 @@ namespace QuadRelate.Externals
                 {
                     if (y != -1)
                     {
-                        switch (board.Position[x, y])
+                        switch (board[x, y])
                         {
                             case Cell.Empty:
                                 Console.Write(" ");

@@ -5,16 +5,28 @@
         public static readonly int Width = 7;
         public static readonly int Height = 6;
 
-        public Cell[,] Position = new Cell[Width, Height];
+        private readonly Cell[,] _position = new Cell[Width, Height];
 
         public Cell this[int x, int y]
         {
-            get
+            get => _position[x, y];
+
+            set => _position[x, y] = value;
+        }
+
+        public Board Clone()
+        {
+            var boardClone = new Board();
+
+            for (var x = 0; x < Board.Width; x++)
             {
-                return Position[x, y];
+                for (var y = 0; y < Board.Height; y++)
+                {
+                    boardClone[x, y] = this[x, y];
+                }
             }
 
-            set => Position[x, y] = value;
+            return boardClone;
         }
 
         public void PlaceCounter(int column, Cell counter)
