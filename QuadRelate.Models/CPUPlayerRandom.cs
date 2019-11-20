@@ -5,7 +5,7 @@ using System;
 
 namespace QuadRelate.Models
 {
-    public class CPUPlayerRandom : ICPUPlayer
+    public class CPUPlayerRandom : IPlayer
     {
         private readonly Random _randomNumber;
 

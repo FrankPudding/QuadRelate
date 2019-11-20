@@ -2,7 +2,7 @@
 
 namespace QuadRelate.Contracts
 {
-    public interface ICPUPlayer
+    public interface IPlayer
     {
         int NextMove(Board board, Cell colour);
     }
