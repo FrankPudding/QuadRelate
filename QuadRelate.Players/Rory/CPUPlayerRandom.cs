@@ -1,18 +1,20 @@
-﻿using QuadRelate.Contracts;
+﻿using System;
+using QuadRelate.Contracts;
 using QuadRelate.Helpers;
 using QuadRelate.Types;
-using System;
 
-namespace QuadRelate.Models
+namespace QuadRelate.Players.Rory
 {
-    public class CPUPlayerRandom : IPlayer
+    public class CpuPlayerRandom : IPlayer
     {
         private readonly Random _randomNumber;
 
-        public CPUPlayerRandom()
+        public CpuPlayerRandom()
         {
             _randomNumber = new Random();
         }
+
+        public string Name => "The Randomizer";
 
         public int NextMove(Board board, Cell colour)
         {

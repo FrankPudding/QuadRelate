@@ -4,6 +4,8 @@ namespace QuadRelate.Contracts
 {
     public interface IPlayer
     {
+        string Name { get; }
+
         int NextMove(Board board, Cell colour);
     }
 }

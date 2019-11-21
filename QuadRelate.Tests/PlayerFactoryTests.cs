@@ -1,5 +1,9 @@
 ﻿using QuadRelate.Models;
 using System;
+using Moq;
+using QuadRelate.Contracts;
+using QuadRelate.Players.Rory;
+using QuadRelate.Players.Vince;
 using Xunit;
 
 namespace QuadRelate.Tests
@@ -10,13 +14,19 @@ namespace QuadRelate.Tests
 
         public PlayerFactoryTests()
         {
-            _playerFactory = new PlayerFactory();
+            var randomizer = new Mock<IRandomizer>();
+            _playerFactory = new PlayerFactory(randomizer.Object);
         }
         
-        [Fact]
-        public void CreatePlayer_ForCPUPlayerRandom_ReturnsCPUPlayerRandom()
+        [Theory]
+        [InlineData(typeof(CpuPlayerRandom))]
+        [InlineData(typeof(CpuPlayerBasic))]
+        [InlineData(typeof(CpuPlayerLefty))]
+        public void CreatePlayer_ForValidPlayerClassNames_ReturnsObjectsOfCorrectType(Type type)
         {
-            Assert.True(_playerFactory.CreatePlayer(nameof(CPUPlayerRandom)) is CPUPlayerRandom);
+            var p = _playerFactory.CreatePlayer(type.Name);
+
+            Assert.IsAssignableFrom(type, p);
         }
 
         [Fact]

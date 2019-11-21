@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuadRelate.Externals", "Qua
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuadRelateApp", "QuadRelateApp\QuadRelateApp.csproj", "{CB6369C4-CB3D-464C-A328-E76FC4E5AA5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadRelate.Models", "QuadRelate.Models\QuadRelate.Models.csproj", "{B2EB9070-BA35-4FAA-9427-C9C40DE7BF4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuadRelate.Models", "QuadRelate.Models\QuadRelate.Models.csproj", "{B2EB9070-BA35-4FAA-9427-C9C40DE7BF4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuadRelate.Players", "QuadRelate.Players\QuadRelate.Players.csproj", "{DF9AE65C-D07C-4C49-8370-DC6ED8B3EE6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{B2EB9070-BA35-4FAA-9427-C9C40DE7BF4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2EB9070-BA35-4FAA-9427-C9C40DE7BF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2EB9070-BA35-4FAA-9427-C9C40DE7BF4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9AE65C-D07C-4C49-8370-DC6ED8B3EE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9AE65C-D07C-4C49-8370-DC6ED8B3EE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9AE65C-D07C-4C49-8370-DC6ED8B3EE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9AE65C-D07C-4C49-8370-DC6ED8B3EE6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
