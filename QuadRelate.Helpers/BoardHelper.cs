@@ -95,6 +95,11 @@ namespace QuadRelate.Helpers
 
         public static bool IsGameOver(this Board board)
         {
+            return board.DoesWinnerExist() || board.AvailableColumns().Count == 0;
+        }
+
+        public static bool DoesWinnerExist(this Board board)
+        {
             return board.DoesHorizontalWinExist() || board.DoesVerticalWinExist() || board.DoesDiagonalWinExist();
         }
 

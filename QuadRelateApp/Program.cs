@@ -12,7 +12,9 @@ namespace QuadRelateApp
         {
             var board = new Board();
             var boardDrawer = new BoardDrawerConsole();
-            var player = new CPUPlayerRandom();
+            var factory = new PlayerFactory();
+            var playerOne = factory.CreatePlayer(nameof(CPUPlayerRandom));
+            var playerTwo = factory.CreatePlayer(nameof(CPUPlayerRandom));
 
             board.Fill(Cell.Empty);
             boardDrawer.DrawBoard(board);
@@ -21,23 +23,29 @@ namespace QuadRelateApp
             {
                 Console.ReadKey();
 
-                board.PlaceCounter(player.NextMove(board), Cell.Yellow);
+                var move = playerOne.NextMove(board.Clone(), Cell.Yellow);
+                board.PlaceCounter(move, Cell.Yellow);
                 boardDrawer.DrawBoard(board);
 
                 if (board.IsGameOver())
                 {
-                    Console.WriteLine("\nYELLOW WINS!");
+                    var message = board.DoesWinnerExist() ? "YELLOW WINS!" : "DRAW!";
+                    Console.WriteLine(message);
+
                     break;
                 }
 
                 Console.ReadKey();
 
-                board.PlaceCounter(player.NextMove(board), Cell.Red);
+                move = playerTwo.NextMove(board.Clone(), Cell.Red);
+                board.PlaceCounter(move, Cell.Red);
                 boardDrawer.DrawBoard(board);
 
                 if (board.IsGameOver())
                 {
-                    Console.WriteLine("\nRED WINS!");
+                    var message = board.DoesWinnerExist() ? "RED WINS!" : "DRAW!";
+                    Console.WriteLine(message);
+
                     break;
                 }
             }
