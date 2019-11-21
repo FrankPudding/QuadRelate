@@ -3,6 +3,7 @@ using QuadRelate.Helpers;
 using QuadRelate.Models;
 using QuadRelate.Types;
 using System;
+using QuadRelate.Players.Rory;
 
 namespace QuadRelateApp
 {
@@ -12,12 +13,14 @@ namespace QuadRelateApp
         {
             var board = new Board();
             var boardDrawer = new BoardDrawerConsole();
-            var factory = new PlayerFactory();
-            var playerOne = factory.CreatePlayer(nameof(CPUPlayerRandom));
-            var playerTwo = factory.CreatePlayer(nameof(CPUPlayerRandom));
+            var randomizer = new Randomizer();
+            var factory = new PlayerFactory(randomizer);
+            var playerOne = factory.CreatePlayer(nameof(CpuPlayerRandom));
+            var playerTwo = factory.CreatePlayer(nameof(CpuPlayerRandom));
 
             board.Fill(Cell.Empty);
             boardDrawer.DrawBoard(board);
+            Console.WriteLine($"'{playerOne.Name}' vs '{playerTwo.Name}'");
 
             for (var i = 0; i < 21; i++)
             {
@@ -29,7 +32,7 @@ namespace QuadRelateApp
 
                 if (board.IsGameOver())
                 {
-                    var message = board.DoesWinnerExist() ? "YELLOW WINS!" : "DRAW!";
+                    var message = board.DoesWinnerExist() ? $"YELLOW WINS! ('{playerOne.Name}')" : "DRAW!";
                     Console.WriteLine(message);
 
                     break;
@@ -43,7 +46,7 @@ namespace QuadRelateApp
 
                 if (board.IsGameOver())
                 {
-                    var message = board.DoesWinnerExist() ? "RED WINS!" : "DRAW!";
+                    var message = board.DoesWinnerExist() ? $"RED WINS! ('{playerTwo.Name}')" : "DRAW!";
                     Console.WriteLine(message);
 
                     break;

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\QuadRelate.Contracts\QuadRelate.Contracts.csproj" />
     <ProjectReference Include="..\QuadRelate.Helpers\QuadRelate.Helpers.csproj" />
-    <ProjectReference Include="..\QuadRelate.Players\QuadRelate.Players.csproj" />
   </ItemGroup>
 
 </Project>
