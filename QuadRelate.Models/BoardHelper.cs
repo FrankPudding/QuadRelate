@@ -1,7 +1,7 @@
-﻿using QuadRelate.Types;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using QuadRelate.Types;
 
-namespace QuadRelate.Helpers
+namespace QuadRelate.Models
 {
     public static class BoardHelper
     {

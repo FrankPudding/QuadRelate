@@ -1,7 +1,7 @@
-﻿using QuadRelate.Models;
-using System;
+﻿using System;
 using Moq;
 using QuadRelate.Contracts;
+using QuadRelate.Factories;
 using QuadRelate.Players.Rory;
 using QuadRelate.Players.Vince;
 using Xunit;
@@ -22,6 +22,7 @@ namespace QuadRelate.Tests
         [InlineData(typeof(CpuPlayerRandom))]
         [InlineData(typeof(CpuPlayerBasic))]
         [InlineData(typeof(CpuPlayerLefty))]
+        [InlineData(typeof(HumanPlayer))]
         public void CreatePlayer_ForValidPlayerClassNames_ReturnsObjectsOfCorrectType(Type type)
         {
             var p = _playerFactory.CreatePlayer(type.Name);

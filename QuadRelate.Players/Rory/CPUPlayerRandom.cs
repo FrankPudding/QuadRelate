@@ -1,6 +1,6 @@
 ﻿using System;
 using QuadRelate.Contracts;
-using QuadRelate.Helpers;
+using QuadRelate.Models;
 using QuadRelate.Types;
 
 namespace QuadRelate.Players.Rory

@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuadRelate.Externals\QuadRelate.Externals.csproj" />
-    <ProjectReference Include="..\QuadRelate.Helpers\QuadRelate.Helpers.csproj" />
+    <ProjectReference Include="..\QuadRelate.Factories\QuadRelate.Factories.csproj" />
     <ProjectReference Include="..\QuadRelate.Models\QuadRelate.Models.csproj" />
     <ProjectReference Include="..\QuadRelate.Players\QuadRelate.Players.csproj" />
     <ProjectReference Include="..\QuadRelate.Types\QuadRelate.Types.csproj" />

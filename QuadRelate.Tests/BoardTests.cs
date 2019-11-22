@@ -22,7 +22,6 @@ namespace QuadRelate.Tests
             Assert.Equal("Cannot place an empty counter\r\nParameter name: counter", exception.Message);
         }
 
-        
         [Theory]
         [InlineData(-1)]
         [InlineData(7)]
@@ -51,8 +50,7 @@ namespace QuadRelate.Tests
         [Fact]
         public void PlaceCounter_ForEmptyRow_PlacesCounterInBottomRow()
         {
-            var boardExpected = new Board();
-            boardExpected[0, 0] = Cell.Red;
+            var boardExpected = new Board {[0, 0] = Cell.Red};
 
             _board.PlaceCounter(0, Cell.Red);
 

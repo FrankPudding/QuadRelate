@@ -1,7 +1,6 @@
-﻿using Moq;
-using QuadRelate.Helpers;
-using QuadRelate.Types;
+﻿using QuadRelate.Types;
 using System.Collections.Generic;
+using QuadRelate.Models;
 using Xunit;
 
 namespace QuadRelate.Tests
@@ -241,6 +240,7 @@ namespace QuadRelate.Tests
             _board[6, 3] = Cell.Yellow;
 
             Assert.False(_board.DoesWinnerExist());
+            Assert.True(_board.IsGameOver());
         }
 
         [Fact]
@@ -265,6 +265,8 @@ namespace QuadRelate.Tests
             _board[6, 3] = Cell.Yellow;
 
             Assert.True(_board.IsGameOver());
+            Assert.False(_board.DoesWinnerExist());
+
         }
 
         [Fact]

@@ -1,9 +1,9 @@
-﻿using QuadRelate.Contracts;
-using System;
+﻿using System;
+using QuadRelate.Contracts;
 using QuadRelate.Players.Rory;
 using QuadRelate.Players.Vince;
 
-namespace QuadRelate.Models
+namespace QuadRelate.Factories
 {
     public class PlayerFactory : IPlayerFactory
     {
@@ -21,6 +21,7 @@ namespace QuadRelate.Models
                 case nameof(CpuPlayerRandom): return new CpuPlayerRandom();
                 case nameof(CpuPlayerBasic): return new CpuPlayerBasic(_randomizer);
                 case nameof(CpuPlayerLefty): return new CpuPlayerLefty();
+                case nameof(HumanPlayer): return new HumanPlayer();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(playerType), "That player does not exist");
             }

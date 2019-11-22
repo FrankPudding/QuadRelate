@@ -1,9 +1,10 @@
 ﻿using QuadRelate.Externals;
-using QuadRelate.Helpers;
-using QuadRelate.Models;
 using QuadRelate.Types;
 using System;
+using QuadRelate.Factories;
+using QuadRelate.Models;
 using QuadRelate.Players.Rory;
+using QuadRelate.Players.Vince;
 
 namespace QuadRelateApp
 {
@@ -15,8 +16,8 @@ namespace QuadRelateApp
             var boardDrawer = new BoardDrawerConsole();
             var randomizer = new Randomizer();
             var factory = new PlayerFactory(randomizer);
-            var playerOne = factory.CreatePlayer(nameof(CpuPlayerRandom));
-            var playerTwo = factory.CreatePlayer(nameof(CpuPlayerRandom));
+            var playerOne = factory.CreatePlayer(nameof(HumanPlayer));
+            var playerTwo = factory.CreatePlayer(nameof(CpuPlayerBasic));
 
             board.Fill(Cell.Empty);
             boardDrawer.DrawBoard(board);
@@ -24,7 +25,7 @@ namespace QuadRelateApp
 
             for (var i = 0; i < 21; i++)
             {
-                Console.ReadKey();
+
 
                 var move = playerOne.NextMove(board.Clone(), Cell.Yellow);
                 board.PlaceCounter(move, Cell.Yellow);
@@ -38,7 +39,6 @@ namespace QuadRelateApp
                     break;
                 }
 
-                Console.ReadKey();
 
                 move = playerTwo.NextMove(board.Clone(), Cell.Red);
                 board.PlaceCounter(move, Cell.Red);

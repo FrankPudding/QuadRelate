@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuadRelate.Contracts\QuadRelate.Contracts.csproj" />
-    <ProjectReference Include="..\QuadRelate.Helpers\QuadRelate.Helpers.csproj" />
+    <ProjectReference Include="..\QuadRelate.Models\QuadRelate.Models.csproj" />
   </ItemGroup>
 
 </Project>
