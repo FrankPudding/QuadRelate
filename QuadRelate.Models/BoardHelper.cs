@@ -95,7 +95,7 @@ namespace QuadRelate.Models
 
         public static bool IsGameOver(this Board board)
         {
-            return board.DoesWinnerExist() || board.AvailableColumns().Count == 0;
+            return board.AvailableColumns().Count == 0 || board.DoesWinnerExist();
         }
 
         public static bool DoesWinnerExist(this Board board)
@@ -112,6 +112,17 @@ namespace QuadRelate.Models
                     board[x, y] = colour;
                 }
             }
+        }
+
+        public static Counter ReverseCounter(this Counter colour)
+        {
+            if (colour == Counter.Yellow)
+                return Counter.Red;
+
+            if (colour == Counter.Red)
+                return Counter.Yellow;
+
+            throw new System.ArgumentOutOfRangeException(nameof(colour), "Can't reverse an empty counter.");
         }
     }
 }

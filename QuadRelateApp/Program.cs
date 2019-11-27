@@ -16,7 +16,7 @@ namespace QuadRelateApp
             var boardDrawer = AppContainer.Resolve<IBoardDrawer>();
             var factory = AppContainer.Resolve<IPlayerFactory>();
             var playerOne = factory.CreatePlayer(nameof(HumanPlayer));
-            var playerTwo = factory.CreatePlayer(nameof(CpuPlayerBasic));
+            var playerTwo = factory.CreatePlayer(nameof(CpuPlayer01));
 
             board.Fill(Counter.Empty);
             boardDrawer.DrawBoard(board);

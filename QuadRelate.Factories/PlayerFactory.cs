@@ -18,10 +18,11 @@ namespace QuadRelate.Factories
         {
             switch (playerType)
             {
+                case nameof(HumanPlayer): return new HumanPlayer();
                 case nameof(CpuPlayerRandom): return new CpuPlayerRandom();
                 case nameof(CpuPlayerBasic): return new CpuPlayerBasic(_randomizer);
                 case nameof(CpuPlayerLefty): return new CpuPlayerLefty();
-                case nameof(HumanPlayer): return new HumanPlayer();
+                case nameof(CpuPlayer01): return new CpuPlayer01();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(playerType), "That player does not exist");
             }
