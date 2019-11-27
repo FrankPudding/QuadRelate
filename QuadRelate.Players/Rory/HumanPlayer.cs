@@ -9,7 +9,7 @@ namespace QuadRelate.Players.Rory
     {
         public string Name => "Human";
 
-        public int NextMove(Board board, Cell colour)
+        public int NextMove(Board board, Counter colour)
         {
             Console.WriteLine("Choose next move:\n");
 

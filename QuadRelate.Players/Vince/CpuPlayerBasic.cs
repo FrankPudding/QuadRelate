@@ -15,7 +15,7 @@ namespace QuadRelate.Players.Vince
 
         public string Name => "Invincible";
 
-        public int NextMove(Board board, Cell colour)
+        public int NextMove(Board board, Counter colour)
         {
             var available = board.AvailableColumns();
 
@@ -60,9 +60,9 @@ namespace QuadRelate.Players.Vince
             return available[_randomizer.Next(available.Count)];
         }
 
-        private static Cell Invert(Cell colour)
+        private static Counter Invert(Counter colour)
         {
-            return (colour == Cell.Yellow) ? Cell.Red : Cell.Yellow;
+            return (colour == Counter.Yellow) ? Counter.Red : Counter.Yellow;
         }
     } 
 }

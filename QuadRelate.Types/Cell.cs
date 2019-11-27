@@ -1,6 +1,6 @@
 ﻿namespace QuadRelate.Types
 {
-    public enum Cell
+    public enum Counter
     {
         Empty,
         Red,

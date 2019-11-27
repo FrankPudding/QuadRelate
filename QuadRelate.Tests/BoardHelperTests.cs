@@ -17,27 +17,27 @@ namespace QuadRelate.Tests
         [Fact]
         public void FillBoard_ForNewBoard_FillsBoard()
         {
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
 
-            Assert.Equal(Cell.Red, _board[0, 0]);
-            Assert.Equal(Cell.Red, _board[Board.Width - 1, Board.Height - 1]);
+            Assert.Equal(Counter.Red, _board[0, 0]);
+            Assert.Equal(Counter.Red, _board[Board.Width - 1, Board.Height - 1]);
         }
 
         [Fact]
         public void FillBoard_ForFullBoard_RefillsBoard()
         {
-            _board.Fill(Cell.Red);
-            _board.Fill(Cell.Yellow);
+            _board.Fill(Counter.Red);
+            _board.Fill(Counter.Yellow);
 
-            Assert.Equal(Cell.Yellow, _board[0, 0]);
-            Assert.Equal(Cell.Yellow, _board[Board.Width - 1, Board.Height - 1]);
+            Assert.Equal(Counter.Yellow, _board[0, 0]);
+            Assert.Equal(Counter.Yellow, _board[Board.Width - 1, Board.Height - 1]);
         }
 
         [Fact]
         public void AvailableColumns_ForFullBoard_ReturnsEmptyList()
         {
             // Fill board in with red counters
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
 
             Assert.Equal(new List<int>(), _board.AvailableColumns());
         }
@@ -54,12 +54,12 @@ namespace QuadRelate.Tests
             }
 
             // Fill board in with red counters
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
             
             // Remove top row of counters
             for (var x = 0; x < Board.Width; x++)
             {
-                _board[x, Board.Height - 1] = Cell.Empty;
+                _board[x, Board.Height - 1] = Counter.Empty;
             }
 
             Assert.Equal(expected, _board.AvailableColumns());
@@ -75,10 +75,10 @@ namespace QuadRelate.Tests
             };
 
             // Fill board in with red counters
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
 
             // Remove top right counter
-            _board[Board.Width - 1, Board.Height - 1] = Cell.Empty;
+            _board[Board.Width - 1, Board.Height - 1] = Counter.Empty;
 
             Assert.Equal(expected, _board.AvailableColumns());
         }
@@ -92,7 +92,7 @@ namespace QuadRelate.Tests
         [Fact]
         public void DoesWinnerExist_ForEmptyBoard_ReturnsFalse()
         {
-            _board.Fill(Cell.Empty);
+            _board.Fill(Counter.Empty);
 
             Assert.False(_board.DoesWinnerExist());
         }
@@ -108,10 +108,10 @@ namespace QuadRelate.Tests
         [InlineData(3, 5)]
         public void DoesWinnerExist_ForHorizontalWin_ReturnsTrue(int xStart, int y)
         {
-            _board[xStart, y] = Cell.Red;
-            _board[xStart + 1, y] = Cell.Red;
-            _board[xStart + 2, y] = Cell.Red;
-            _board[xStart + 3, y] = Cell.Red;
+            _board[xStart, y] = Counter.Red;
+            _board[xStart + 1, y] = Counter.Red;
+            _board[xStart + 2, y] = Counter.Red;
+            _board[xStart + 3, y] = Counter.Red;
 
             Assert.True(_board.DoesWinnerExist());
         }
@@ -125,10 +125,10 @@ namespace QuadRelate.Tests
         [InlineData(6, 2)]
         public void DoesWinnerExist_ForVerticalWin_ReturnsTrue(int x, int yStart)
         {
-            _board[x, yStart] = Cell.Red;
-            _board[x, yStart + 1] = Cell.Red;
-            _board[x, yStart + 2] = Cell.Red;
-            _board[x, yStart + 3] = Cell.Red;
+            _board[x, yStart] = Counter.Red;
+            _board[x, yStart + 1] = Counter.Red;
+            _board[x, yStart + 2] = Counter.Red;
+            _board[x, yStart + 3] = Counter.Red;
 
             Assert.True(_board.DoesWinnerExist());
         }
@@ -139,10 +139,10 @@ namespace QuadRelate.Tests
         [InlineData(2, 2)]
         public void DoesWinnerExist_ForDiagonalNorthEastWin_ReturnsTrue(int xStart, int yStart)
         {
-            _board[xStart, yStart] = Cell.Red;
-            _board[xStart + 1, yStart + 1] = Cell.Red;
-            _board[xStart + 2, yStart + 2] = Cell.Red;
-            _board[xStart + 3, yStart + 3] = Cell.Red;
+            _board[xStart, yStart] = Counter.Red;
+            _board[xStart + 1, yStart + 1] = Counter.Red;
+            _board[xStart + 2, yStart + 2] = Counter.Red;
+            _board[xStart + 3, yStart + 3] = Counter.Red;
 
             Assert.True(_board.DoesWinnerExist());
         }
@@ -153,10 +153,10 @@ namespace QuadRelate.Tests
         [InlineData(4, 2)]
         public void DoesWinnerExist_ForDiagonalNorthWestWin_ReturnsTrue(int xStart, int yStart)
         {
-            _board[xStart, yStart] = Cell.Red;
-            _board[xStart - 1, yStart + 1] = Cell.Red;
-            _board[xStart - 2, yStart + 2] = Cell.Red;
-            _board[xStart - 3, yStart + 3] = Cell.Red;
+            _board[xStart, yStart] = Counter.Red;
+            _board[xStart - 1, yStart + 1] = Counter.Red;
+            _board[xStart - 2, yStart + 2] = Counter.Red;
+            _board[xStart - 3, yStart + 3] = Counter.Red;
 
             Assert.True(_board.DoesWinnerExist());
         }
@@ -169,9 +169,9 @@ namespace QuadRelate.Tests
         [InlineData(4, 0)]
         public void DoesWinnerExist_ForHorizontalThree_ReturnsFalse(int xStart, int y)
         {
-            _board[xStart, y] = Cell.Red;
-            _board[xStart + 1, y] = Cell.Red;
-            _board[xStart + 2, y] = Cell.Red;
+            _board[xStart, y] = Counter.Red;
+            _board[xStart + 1, y] = Counter.Red;
+            _board[xStart + 2, y] = Counter.Red;
 
             Assert.False(_board.DoesWinnerExist());
         }
@@ -183,9 +183,9 @@ namespace QuadRelate.Tests
         [InlineData(0, 3)]
         public void DoesWinnerExist_ForVerticalThree_ReturnsFalse(int x, int yStart)
         {
-            _board[x, yStart] = Cell.Red;
-            _board[x, yStart + 1] = Cell.Red;
-            _board[x, yStart + 2] = Cell.Red;
+            _board[x, yStart] = Counter.Red;
+            _board[x, yStart + 1] = Counter.Red;
+            _board[x, yStart + 2] = Counter.Red;
            
             Assert.False(_board.DoesWinnerExist());
         }
@@ -197,9 +197,9 @@ namespace QuadRelate.Tests
         [InlineData(3, 3)]
         public void DoesWinnerExist_ForDiagonalNorthEastThree_ReturnsFalse(int xStart, int yStart)
         {
-            _board[xStart, yStart] = Cell.Red;
-            _board[xStart + 1, yStart + 1] = Cell.Red;
-            _board[xStart + 2, yStart + 2] = Cell.Red;
+            _board[xStart, yStart] = Counter.Red;
+            _board[xStart + 1, yStart + 1] = Counter.Red;
+            _board[xStart + 2, yStart + 2] = Counter.Red;
 
             Assert.False(_board.DoesWinnerExist());
         }
@@ -211,9 +211,9 @@ namespace QuadRelate.Tests
         [InlineData(3, 3)]
         public void DoesWinnerExist_ForDiagonalNorthWestThree_ReturnsFalse(int xStart, int yStart)
         {
-            _board[xStart, yStart] = Cell.Red;
-            _board[xStart - 1, yStart + 1] = Cell.Red;
-            _board[xStart - 2, yStart + 2] = Cell.Red;
+            _board[xStart, yStart] = Counter.Red;
+            _board[xStart - 1, yStart + 1] = Counter.Red;
+            _board[xStart - 2, yStart + 2] = Counter.Red;
 
             Assert.False(_board.DoesWinnerExist());
         }
@@ -221,23 +221,23 @@ namespace QuadRelate.Tests
         [Fact]
         public void DoesWinnerExist_ForDraw_ReturnsFalse()
         {
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
 
-            _board[3, 0] = Cell.Yellow;
-            _board[3, 1] = Cell.Yellow;
-            _board[3, 2] = Cell.Yellow;
-            _board[3, 4] = Cell.Yellow;
-            _board[3, 5] = Cell.Yellow;
-            _board[2, 2] = Cell.Yellow;
-            _board[2, 3] = Cell.Yellow;
-            _board[2, 4] = Cell.Yellow;
-            _board[4, 2] = Cell.Yellow;
-            _board[4, 3] = Cell.Yellow;
-            _board[4, 4] = Cell.Yellow;
-            _board[0, 3] = Cell.Yellow;
-            _board[1, 3] = Cell.Yellow;
-            _board[5, 3] = Cell.Yellow;
-            _board[6, 3] = Cell.Yellow;
+            _board[3, 0] = Counter.Yellow;
+            _board[3, 1] = Counter.Yellow;
+            _board[3, 2] = Counter.Yellow;
+            _board[3, 4] = Counter.Yellow;
+            _board[3, 5] = Counter.Yellow;
+            _board[2, 2] = Counter.Yellow;
+            _board[2, 3] = Counter.Yellow;
+            _board[2, 4] = Counter.Yellow;
+            _board[4, 2] = Counter.Yellow;
+            _board[4, 3] = Counter.Yellow;
+            _board[4, 4] = Counter.Yellow;
+            _board[0, 3] = Counter.Yellow;
+            _board[1, 3] = Counter.Yellow;
+            _board[5, 3] = Counter.Yellow;
+            _board[6, 3] = Counter.Yellow;
 
             Assert.False(_board.DoesWinnerExist());
             Assert.True(_board.IsGameOver());
@@ -246,23 +246,23 @@ namespace QuadRelate.Tests
         [Fact]
         public void IsGameOver_ForDraw_ReturnsTrue()
         {
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
 
-            _board[3, 0] = Cell.Yellow;
-            _board[3, 1] = Cell.Yellow;
-            _board[3, 2] = Cell.Yellow;
-            _board[3, 4] = Cell.Yellow;
-            _board[3, 5] = Cell.Yellow;
-            _board[2, 2] = Cell.Yellow;
-            _board[2, 3] = Cell.Yellow;
-            _board[2, 4] = Cell.Yellow;
-            _board[4, 2] = Cell.Yellow;
-            _board[4, 3] = Cell.Yellow;
-            _board[4, 4] = Cell.Yellow;
-            _board[0, 3] = Cell.Yellow;
-            _board[1, 3] = Cell.Yellow;
-            _board[5, 3] = Cell.Yellow;
-            _board[6, 3] = Cell.Yellow;
+            _board[3, 0] = Counter.Yellow;
+            _board[3, 1] = Counter.Yellow;
+            _board[3, 2] = Counter.Yellow;
+            _board[3, 4] = Counter.Yellow;
+            _board[3, 5] = Counter.Yellow;
+            _board[2, 2] = Counter.Yellow;
+            _board[2, 3] = Counter.Yellow;
+            _board[2, 4] = Counter.Yellow;
+            _board[4, 2] = Counter.Yellow;
+            _board[4, 3] = Counter.Yellow;
+            _board[4, 4] = Counter.Yellow;
+            _board[0, 3] = Counter.Yellow;
+            _board[1, 3] = Counter.Yellow;
+            _board[5, 3] = Counter.Yellow;
+            _board[6, 3] = Counter.Yellow;
 
             Assert.True(_board.IsGameOver());
             Assert.False(_board.DoesWinnerExist());
@@ -281,7 +281,7 @@ namespace QuadRelate.Tests
         [Fact]
         public void CloneBoard_ForFullBoard_ReturnsSameBoard()
         {
-            _board.Fill(Cell.Red);
+            _board.Fill(Counter.Red);
 
             Assert.Equal(_board[0, 0], _board.Clone()[0, 0]);
             Assert.Equal(_board[0, Board.Height - 1], _board.Clone()[0, Board.Height - 1]);
