@@ -5,9 +5,9 @@
         public static readonly int Width = 7;
         public static readonly int Height = 6;
 
-        private readonly Cell[,] _position = new Cell[Width, Height];
+        private readonly Counter[,] _position = new Counter[Width, Height];
 
-        public Cell this[int x, int y]
+        public Counter this[int x, int y]
         {
             get => _position[x, y];
 
@@ -29,9 +29,9 @@
             return boardClone;
         }
 
-        public void PlaceCounter(int column, Cell counter)
+        public void PlaceCounter(int column, Counter counter)
         {
-            if (counter == Types.Cell.Empty)
+            if (counter == Counter.Empty)
             {
                 throw new System.ArgumentOutOfRangeException(nameof(counter), "Cannot place an empty counter");
             }
@@ -39,14 +39,14 @@
             {
                 throw new System.ArgumentOutOfRangeException(nameof(column), "Cannot place a counter in a column that does not exist");
             }
-            else if (this[column, Height - 1] != Cell.Empty)
+            else if (this[column, Height - 1] != Counter.Empty)
             {
                 throw new System.ArgumentOutOfRangeException(nameof(column), "Cannot place a counter in a full column");
             }
 
             for (var y = 0; y < Height; y++)
             {
-                if (this[column, y] == Cell.Empty)
+                if (this[column, y] == Counter.Empty)
                 {
                     this[column, y] = counter;
                     break;

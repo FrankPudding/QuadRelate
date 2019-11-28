@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\QuadRelate.Externals\QuadRelate.Externals.csproj" />
     <ProjectReference Include="..\QuadRelate.Factories\QuadRelate.Factories.csproj" />
-    <ProjectReference Include="..\QuadRelate.IocContainer\QuadRelate.IocContainer.csproj" />
-    <ProjectReference Include="..\QuadRelate.Models\QuadRelate.Models.csproj" />
     <ProjectReference Include="..\QuadRelate.Players\QuadRelate.Players.csproj" />
-    <ProjectReference Include="..\QuadRelate.Types\QuadRelate.Types.csproj" />
   </ItemGroup>
 
 </Project>

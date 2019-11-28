@@ -31,11 +31,11 @@ namespace QuadRelate.Externals
                     {
                         switch (board[x, y])
                         {
-                            case Cell.Empty:
+                            case Counter.Empty:
                                 Console.Write(" ");
                                 break;
 
-                            case Cell.Red:
+                            case Counter.Red:
                                 Console.BackgroundColor = ConsoleColor.Red;
                                 Console.ForegroundColor = ConsoleColor.Black;
                                 Console.Write('\u20DD');
@@ -43,7 +43,7 @@ namespace QuadRelate.Externals
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
 
-                            case Cell.Yellow:
+                            case Counter.Yellow:
                                 Console.BackgroundColor = ConsoleColor.Yellow;
                                 Console.ForegroundColor = ConsoleColor.Black;
                                 Console.Write('\u20DD');

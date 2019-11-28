@@ -16,7 +16,7 @@ namespace QuadRelate.Players.Rory
 
         public string Name => "The Randomizer";
 
-        public int NextMove(Board board, Cell colour)
+        public int NextMove(Board board, Counter colour)
         {
             var index = _randomNumber.Next(board.AvailableColumns().Count);
 

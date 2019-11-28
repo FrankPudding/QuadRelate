@@ -8,7 +8,7 @@ namespace QuadRelate.Players.Vince
     {
         public string Name => "Lefty";
 
-        public int NextMove(Board board, Cell colour)
+        public int NextMove(Board board, Counter colour)
         {
             return board.AvailableColumns()[0];
         }
