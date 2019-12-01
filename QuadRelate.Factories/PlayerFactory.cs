@@ -18,8 +18,8 @@ namespace QuadRelate.Factories
         {
             switch (playerType)
             {
-                case nameof(CpuPlayerRandom): return new CpuPlayerRandom();
-                case nameof(CpuPlayerBasic): return new CpuPlayerBasic(_randomizer);
+                case nameof(CpuPlayerRandom): return new CpuPlayerRandom(_randomizer);
+                case nameof(CpuPlayerVince): return new CpuPlayerVince();
                 case nameof(CpuPlayerLefty): return new CpuPlayerLefty();
                 case nameof(HumanPlayer): return new HumanPlayer();
                 default:

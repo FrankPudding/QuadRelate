@@ -20,7 +20,7 @@ namespace QuadRelate.Tests
         
         [Theory]
         [InlineData(typeof(CpuPlayerRandom))]
-        [InlineData(typeof(CpuPlayerBasic))]
+        [InlineData(typeof(CpuPlayerVince))]
         [InlineData(typeof(CpuPlayerLefty))]
         [InlineData(typeof(HumanPlayer))]
         public void CreatePlayer_ForValidPlayerClassNames_ReturnsObjectsOfCorrectType(Type type)
