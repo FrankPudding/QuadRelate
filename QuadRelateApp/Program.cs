@@ -1,5 +1,4 @@
 ﻿using QuadRelate.Types;
-using System;
 using QuadRelate.Models;
 using QuadRelate.Players.Rory;
 using QuadRelate.Players.Vince;
@@ -12,45 +11,16 @@ namespace QuadRelateApp
     {
         static void Main()
         {
-            var board = new Board();
-            var boardDrawer = AppContainer.Resolve<IBoardDrawer>();
+            var messageWriter = AppContainer.Resolve<IMessageWriter>();
+            var gamePlayer = AppContainer.Resolve<IGamePlayer>();
             var factory = AppContainer.Resolve<IPlayerFactory>();
-            var playerOne = factory.CreatePlayer(nameof(HumanPlayer));
-            var playerTwo = factory.CreatePlayer(nameof(CpuPlayer01));
+            var playerOne = factory.CreatePlayer(nameof(CpuPlayer02));
+            var playerTwo = factory.CreatePlayer(nameof(CpuPlayerRandom));
 
-            board.Fill(Counter.Empty);
-            boardDrawer.DrawBoard(board);
-            Console.WriteLine($"'{playerOne.Name}' vs '{playerTwo.Name}'");
+            var score = gamePlayer.PlayMultipleGames(playerOne, playerTwo, 10);
+            //var score = gamePlayer.PlayOneGame(playerOne, playerTwo);
 
-            for (var i = 0; i < 21; i++)
-            {
-                var move = playerOne.NextMove(board.Clone(), Counter.Yellow);
-                board.PlaceCounter(move, Counter.Yellow);
-                boardDrawer.DrawBoard(board);
-
-                if (board.IsGameOver())
-                {
-                    var message = board.DoesWinnerExist() ? $"YELLOW WINS! ('{playerOne.Name}')" : "DRAW!";
-                    Console.WriteLine(message);
-
-                    break;
-                }
-
-
-                move = playerTwo.NextMove(board.Clone(), Counter.Red);
-                board.PlaceCounter(move, Counter.Red);
-                boardDrawer.DrawBoard(board);
-
-                if (board.IsGameOver())
-                {
-                    var message = board.DoesWinnerExist() ? $"RED WINS! ('{playerTwo.Name}')" : "DRAW!";
-                    Console.WriteLine(message);
-
-                    break;
-                }
-            }
-
-            Console.ReadKey();
+            messageWriter.WriteMessage($"{playerOne.GetType().Name} {score.PlayerOne} : {score.PlayerTwo} {playerTwo.GetType().Name}");
         }
     }
 }

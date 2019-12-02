@@ -4,20 +4,22 @@ using QuadRelate.Types;
 
 namespace QuadRelate.Players.Rory
 {
-    public class CpuPlayer01 : IPlayer
+    public class CpuPlayer02 : IPlayer
     {
-        public string Name => "Easy Swags";
+        public string Name => "Not So Fast Swaggy";
 
         public int NextMove(Board board, Counter colour)
         {
+            var availableColumns = board.AvailableColumns();
+
             // Play only move available
-            if (board.AvailableColumns().Count == 1)
-                return board.AvailableColumns()[0];
+            if (availableColumns.Count == 1)
+                return availableColumns[0];
 
             Board boardClone;
 
             // Play winning move
-            foreach (var move in board.AvailableColumns())
+            foreach (var move in availableColumns)
             {
                 boardClone = board.Clone();
                 boardClone.PlaceCounter(move, colour);
@@ -27,7 +29,7 @@ namespace QuadRelate.Players.Rory
             }
 
             // Play blocking move
-            foreach (var move in board.AvailableColumns())
+            foreach (var move in availableColumns)
             {
                 boardClone = board.Clone();
                 boardClone.PlaceCounter(move, colour.ReverseCounter());
@@ -37,7 +39,7 @@ namespace QuadRelate.Players.Rory
             }
 
             // Do not allow two possible wins
-            foreach (var move in board.AvailableColumns())
+            foreach (var move in availableColumns)
             {
                 boardClone = board.Clone();
                 boardClone.PlaceCounter(move, colour.ReverseCounter());
@@ -51,17 +53,36 @@ namespace QuadRelate.Players.Rory
                     return move;
             }
 
+            var nonLosingMoves = availableColumns;
+
+            // Don't play moves that allow the opponent to win
+            foreach (var move in availableColumns.ToArray())
+            {
+                boardClone = board.Clone();
+
+                boardClone.PlaceCounter(move, colour);
+
+                if (boardClone.AvailableColumns().Contains(move))
+                {
+                    boardClone.PlaceCounter(move, colour.ReverseCounter());
+
+                    if (boardClone.DoesWinnerExist())
+                        nonLosingMoves.Remove(move);
+                }
+            }
+
             // Play in highest column
             for (var row = Board.Height - 2; row >= 0; row--)
             {
-                foreach (var move in board.AvailableColumns())
+                foreach (var move in nonLosingMoves)
                 {
                     if (board[move, row] != Counter.Empty)
                         return move;
                 }
             }
 
-            return board.AvailableColumns()[0];
+            // Failsafe that shouldn't be used
+            return availableColumns[0];
         }
     }
 }

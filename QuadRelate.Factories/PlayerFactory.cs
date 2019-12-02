@@ -23,6 +23,7 @@ namespace QuadRelate.Factories
                 case nameof(CpuPlayerBasic): return new CpuPlayerBasic(_randomizer);
                 case nameof(CpuPlayerLefty): return new CpuPlayerLefty();
                 case nameof(CpuPlayer01): return new CpuPlayer01();
+                case nameof(CpuPlayer02): return new CpuPlayer02();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(playerType), "That player does not exist");
             }

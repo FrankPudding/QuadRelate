@@ -2,6 +2,7 @@
 using QuadRelate.Contracts;
 using QuadRelate.Externals;
 using QuadRelate.Factories;
+using QuadRelate.Models;
 
 namespace QuadRelate.IocContainer
 {
@@ -22,9 +23,13 @@ namespace QuadRelate.IocContainer
             // Player Factory
             builder.RegisterType<PlayerFactory>().As<IPlayerFactory>();
 
+            // Models
+            builder.RegisterType<GamePlayer>().As<IGamePlayer>();
+
             // Externals
             builder.RegisterType<BoardDrawerConsole>().As<IBoardDrawer>();
             builder.RegisterType<Randomizer>().As<IRandomizer>();
+            builder.RegisterType<MessageWriterConsole>().As<IMessageWriter>();
         }
 
         public static T Resolve<T>()
