@@ -1,10 +1,11 @@
 ﻿using QuadRelate.Contracts;
 using QuadRelate.Models;
 using QuadRelate.Types;
+using System.Collections.Generic;
 
 namespace QuadRelate.Players.Rory
 {
-    public class CpuPlayer02 : IPlayer
+    public class CPUPlayer02 : IPlayer
     {
         public string Name => "Not So Fast Swaggy";
 
@@ -53,10 +54,14 @@ namespace QuadRelate.Players.Rory
                     return move;
             }
 
-            var nonLosingMoves = availableColumns;
+            var nonLosingMoves = new List<int>();
+            foreach (var move in availableColumns)
+            {
+                nonLosingMoves.Add(move);
+            }
 
             // Don't play moves that allow the opponent to win
-            foreach (var move in availableColumns.ToArray())
+            foreach (var move in availableColumns)
             {
                 boardClone = board.Clone();
 
@@ -71,7 +76,28 @@ namespace QuadRelate.Players.Rory
                 }
             }
 
-            // Play in highest column
+            // Don't play moves that allow the opponent two possible wins
+            foreach (var move in availableColumns)
+            {
+                if (nonLosingMoves.Contains(move))
+                {
+                    boardClone = board.Clone();
+                    boardClone.PlaceCounter(move, colour);
+
+                    var postMoveAvailableColumns = boardClone.AvailableColumns();
+
+                    foreach (var opponentMove in postMoveAvailableColumns)
+                    {
+                        var boardPostMove = boardClone.Clone();
+                        boardPostMove.PlaceCounter(opponentMove, colour.ReverseCounter());
+
+                        if (WinningMoves(boardPostMove, colour.ReverseCounter()).Count > 1)
+                            nonLosingMoves.Remove(move);
+                    }
+                }
+            }
+
+            // Play highest column
             for (var row = Board.Height - 2; row >= 0; row--)
             {
                 foreach (var move in nonLosingMoves)
@@ -83,6 +109,22 @@ namespace QuadRelate.Players.Rory
 
             // Failsafe that shouldn't be used
             return availableColumns[0];
+        }
+
+        private List<int> WinningMoves(Board board, Counter colour)
+        {
+            var winningMoves = new List<int>();
+
+            foreach (var move in board.AvailableColumns().ToArray())
+            {
+                var boardClone = board.Clone();
+                boardClone.PlaceCounter(move, colour);
+
+                if (!boardClone.DoesWinnerExist())
+                    winningMoves.Add(move);
+            }
+
+            return winningMoves;
         }
     }
 }
