@@ -1,18 +1,13 @@
-﻿using QuadRelate.Contracts;
+﻿using System.Collections.Generic;
+using System.Linq;
+using QuadRelate.Contracts;
 using QuadRelate.Models;
 using QuadRelate.Types;
 
 namespace QuadRelate.Players.Vince
 {
-    public class CpuPlayerBasic : IPlayer
+    public class CpuPlayerVince : IPlayer
     {
-        private readonly IRandomizer _randomizer;
-
-        public CpuPlayerBasic(IRandomizer randomizer)
-        {
-            _randomizer = randomizer;
-        }
-
         public string Name => "Invincible";
 
         public int NextMove(Board board, Counter colour)
@@ -33,7 +28,7 @@ namespace QuadRelate.Players.Vince
             }
 
             // 3. If there's a blocking move - play it.
-            var opponent = Invert(colour);
+            var opponent = colour.Invert();
             foreach (var m in available)
             {
                 var clone = board.Clone();
@@ -42,27 +37,18 @@ namespace QuadRelate.Players.Vince
                     return m;
             }
 
-            // 4. If we can win in two moves - play it.
-            foreach (var m in available)
+            // 4. ScoreEvaluator.
+            var scores = new Dictionary<int, int>();
+            foreach (var move in available)
             {
                 var clone = board.Clone();
-                clone.PlaceCounter(m, colour);
-                var nextLotOfAvailable = clone.AvailableColumns();
-                foreach (var n in nextLotOfAvailable)
-                {
-                    clone.PlaceCounter(n, colour);
-                    if (clone.IsGameOver())
-                        return n;
-                }
+                clone.PlaceCounter(move, colour);
+                var myScore = ScoreEvaluator.GetScore(clone, colour);
+                var opponentsScore = ScoreEvaluator.GetScore(clone, colour.Invert());
+                scores.Add(move, myScore - opponentsScore);
             }
 
-            // 5. Fallback - play random move.
-            return available[_randomizer.Next(available.Count)];
-        }
-
-        private static Counter Invert(Counter colour)
-        {
-            return (colour == Counter.Yellow) ? Counter.Red : Counter.Yellow;
+            return scores.FirstOrDefault(x => x.Value == scores.Values.Max()).Key;
         }
     } 
 }

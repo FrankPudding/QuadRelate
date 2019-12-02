@@ -1,5 +1,4 @@
-﻿using System;
-using QuadRelate.Contracts;
+﻿using QuadRelate.Contracts;
 using QuadRelate.Models;
 using QuadRelate.Types;
 
@@ -7,18 +6,18 @@ namespace QuadRelate.Players.Rory
 {
     public class CpuPlayerRandom : IPlayer
     {
-        private readonly Random _randomNumber;
+        private readonly IRandomizer _randomizer;
 
-        public CpuPlayerRandom()
+        public CpuPlayerRandom(IRandomizer randomizer)
         {
-            _randomNumber = new Random();
+            _randomizer = randomizer;
         }
 
         public string Name => "The Randomizer";
 
         public int NextMove(Board board, Counter colour)
         {
-            var index = _randomNumber.Next(board.AvailableColumns().Count);
+            var index = _randomizer.Next(board.AvailableColumns().Count);
 
             return board.AvailableColumns()[index];
         }
