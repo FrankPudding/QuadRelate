@@ -288,5 +288,26 @@ namespace QuadRelate.Tests
             Assert.Equal(_board[Board.Width - 1, 0], _board.Clone()[Board.Width - 1, 0]);
             Assert.Equal(_board[Board.Width - 1, Board.Height - 1], _board.Clone()[Board.Width - 1, Board.Height - 1]);
         }
+
+        [Fact]
+        public void ReverseCounter_ForYellowCounter_ReturnsRedCounter()
+        {
+            Assert.Equal(Counter.Red, Counter.Yellow.ReverseCounter());
+        }
+
+        [Fact]
+        public void ReverseCounter_ForRedCounter_ReturnsYellowCounter()
+        {
+            Assert.Equal(Counter.Yellow, Counter.Red.ReverseCounter());
+        }
+
+        [Fact]
+        public void ReverseCounter_ForEmptycounter_ThrowsException()
+        {
+            var exception = Assert.Throws<System.ArgumentOutOfRangeException>(() => Counter.Empty.ReverseCounter());
+
+            Assert.Equal("colour", exception.ParamName);
+            Assert.Equal("Can't reverse an empty counter.\r\nParameter name: colour", exception.Message);
+        }
     }
 }
