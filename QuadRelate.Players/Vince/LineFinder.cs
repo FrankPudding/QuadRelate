@@ -5,6 +5,7 @@ namespace QuadRelate.Players.Vince
 {
     internal static class LineFinder
     {
+        private const int _minimumLineSize = 3;
         private static Board _board;
         private static IList<IList<Counter>> _lines;
 
@@ -29,7 +30,8 @@ namespace QuadRelate.Players.Vince
                     line.Add(_board[x, y]);
                 }
 
-                _lines.Add(line);
+                if (line.Count >= _minimumLineSize)
+                    _lines.Add(line);
             }
         }
 
@@ -43,7 +45,8 @@ namespace QuadRelate.Players.Vince
                     line.Add(_board[x, y]);
                 }
 
-                _lines.Add(line);
+                if (line.Count >= _minimumLineSize)
+                    _lines.Add(line);
             }
         }
 
@@ -77,7 +80,8 @@ namespace QuadRelate.Players.Vince
                 y++;
             }
 
-            _lines.Add(line);
+            if (line.Count >= _minimumLineSize)
+                _lines.Add(line);
         }
 
         private static void AddBottomRightToTopLeftLine(int startX, int startY)
@@ -93,7 +97,8 @@ namespace QuadRelate.Players.Vince
                 y--;
             }
 
-            _lines.Add(line);
+            if (line.Count >= _minimumLineSize)
+                _lines.Add(line);
         }
 
         private static bool IsValidCell(int x, int y)
