@@ -53,14 +53,14 @@ namespace QuadRelate.Players.Vince
         private static void AddDiagonalLines()
         {
             // Bottom row.
-            for (var x = 1; x < Board.Width; x++)
+            for (var x = 0; x < Board.Width; x++)
             {
                 AddBottomLeftToTopRightLine(x, 0);
                 AddBottomRightToTopLeftLine(x, 0);
             }
 
             // Left/right hand columns.
-            for (var y = 1; y < Board.Height; y++)
+            for (var y = 1; y < Board.Height-1; y++)
             {
                 AddBottomLeftToTopRightLine(0, y);
                 AddBottomRightToTopLeftLine(Board.Width-1, y);
@@ -93,8 +93,8 @@ namespace QuadRelate.Players.Vince
             while (IsValidCell(x, y))
             {
                 line.Add(_board[x, y]);
-                x++;
-                y--;
+                x--;
+                y++;
             }
 
             if (line.Count >= _minimumLineSize)
