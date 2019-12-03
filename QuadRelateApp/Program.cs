@@ -4,6 +4,7 @@ using QuadRelate.Players.Rory;
 using QuadRelate.Players.Vince;
 using QuadRelate.IocContainer;
 using QuadRelate.Contracts;
+using System;
 
 namespace QuadRelateApp
 {
@@ -21,6 +22,8 @@ namespace QuadRelateApp
             //var score = gamePlayer.PlayOneGame(playerOne, playerTwo);
 
             messageWriter.WriteMessage($"{playerOne.GetType().Name} {score.PlayerOne} : {score.PlayerTwo} {playerTwo.GetType().Name}");
+
+            Console.ReadLine();
         }
     }
 }
