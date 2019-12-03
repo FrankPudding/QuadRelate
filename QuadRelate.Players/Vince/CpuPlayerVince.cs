@@ -17,42 +17,72 @@ namespace QuadRelate.Players.Vince
         {
             _currentColour = colour;
 
-            var available = board.AvailableColumns();
+            var availableMoves = board.AvailableColumns();
 
             // 1. If only one possible move - play it.
-            if (available.Count == 1)
-                return available[0];
+            if (availableMoves.Count == 1)
+                return availableMoves[0];
 
             // 2. If there's a winning move - play it.
-            foreach (var m in available)
+            foreach (var myMove in availableMoves)
             {
                 var clone = board.Clone();
-                clone.PlaceCounter(m, colour);
+                clone.PlaceCounter(myMove, colour);
                 if (clone.IsGameOver())
-                    return m;
+                    return myMove;
             }
 
             // 3. If there's a blocking move - play it.
             var opponent = colour.Invert();
-            foreach (var m in available)
+            foreach (var opponentMove in availableMoves)
             {
                 var clone = board.Clone();
-                clone.PlaceCounter(m, opponent);
+                clone.PlaceCounter(opponentMove, opponent);
                 if (clone.IsGameOver())
-                    return m;
+                    return opponentMove;
             }
 
-            // 4. ScoreEvaluator.
-            var scores = new Dictionary<int, int>();
-            foreach (var move in available)
+            var reasonableMoves = new List<int>(availableMoves);
+            foreach (var myMove in availableMoves)
             {
                 var clone = board.Clone();
-                clone.PlaceCounter(move, colour);
-                var myScore = ScoreEvaluator.GetScore(clone, colour);
-                var opponentsScore = ScoreEvaluator.GetScore(clone, colour.Invert());
-                scores.Add(move, myScore - opponentsScore);
+                clone.PlaceCounter(myMove, colour);
+                foreach (var opponentMove in clone.AvailableColumns())
+                {
+                    var innerClone = clone.Clone();
+                    innerClone.PlaceCounter(opponentMove, opponent);
+                    if (innerClone.IsGameOver())
+                        reasonableMoves.Remove(myMove);
+                }
             }
 
+            if (!reasonableMoves.Any())
+            {
+                reasonableMoves = availableMoves; // All moves lead to a potential loss.
+                Debug.WriteLine("I lose!");
+            }
+
+            // 5. ScoreEvaluator.
+            var scores = new Dictionary<int, int>();
+            foreach (var myMove in reasonableMoves)
+            {
+                var myTotal = 0;
+                var opponentTotal = 0;
+                var clone = board.Clone();
+                clone.PlaceCounter(myMove, colour);
+                var myScore = ScoreEvaluator.GetScore(clone, colour);
+                foreach (var opponentMove in clone.AvailableColumns())
+                {
+                    var innerClone = clone.Clone();
+                    innerClone.PlaceCounter(opponentMove, opponent);
+                    opponentTotal += ScoreEvaluator.GetScore(innerClone, opponent);
+                    myTotal += myScore;
+                }
+                
+                scores.Add(myMove, myTotal - opponentTotal);
+            }
+
+            Debug.WriteLine(string.Join('.', scores));
             return scores.FirstOrDefault(x => x.Value == scores.Values.Max()).Key;
         }
 
