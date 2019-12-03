@@ -9,10 +9,16 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerVince : IPlayer
     {
+        private readonly IRandomizer _randomizer;
         private const int _centreColumn = 3;
         private Counter _currentColour;
 
         public string Name => "Invincible";
+
+        public CpuPlayerVince(IRandomizer randomizer)
+        {
+            _randomizer = randomizer;
+        }
 
         public int NextMove(Board board, Counter colour)
         {
@@ -89,12 +95,14 @@ namespace QuadRelate.Players.Vince
             }
 
             Debug.WriteLine(string.Join('.', scores));
-            return scores.FirstOrDefault(x => x.Value == scores.Values.Max()).Key;
+            var keys = scores.Where(x => x.Value == scores.Values.Max()).ToList();
+
+            return keys[_randomizer.Next(keys.Count)].Key;
         }
 
         public void GameOver(GameResult result)
         {
-            if (result.Winner != _currentColour)
+            if (result.Winner == _currentColour.Invert())
             {
                 Debug.WriteLine(string.Join('.', result.Moves));
             }
