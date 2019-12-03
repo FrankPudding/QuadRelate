@@ -9,6 +9,7 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerVince : IPlayer
     {
+        private const int _centreColumn = 4;
         private Counter _currentColour;
 
         public string Name => "Invincible";
@@ -23,7 +24,11 @@ namespace QuadRelate.Players.Vince
             if (availableMoves.Count == 1)
                 return availableMoves[0];
 
-            // 2. If there's a winning move - play it.
+            // 2. Start in centre.
+            if (board[_centreColumn, 0] == Counter.Empty || board[_centreColumn, 1] == Counter.Empty)
+                return _centreColumn;
+
+            // 3. If there's a winning move - play it.
             foreach (var myMove in availableMoves)
             {
                 var clone = board.Clone();
@@ -32,7 +37,7 @@ namespace QuadRelate.Players.Vince
                     return myMove;
             }
 
-            // 3. If there's a blocking move - play it.
+            // 4. If there's a blocking move - play it.
             var opponent = colour.Invert();
             foreach (var opponentMove in availableMoves)
             {
@@ -42,6 +47,7 @@ namespace QuadRelate.Players.Vince
                     return opponentMove;
             }
 
+            // 5. Check if opponent can win after this move.
             var reasonableMoves = new List<int>(availableMoves);
             foreach (var myMove in availableMoves)
             {
@@ -62,7 +68,7 @@ namespace QuadRelate.Players.Vince
                 Debug.WriteLine("I lose!");
             }
 
-            // 5. ScoreEvaluator.
+            // 6. ScoreEvaluator.
             var scores = new Dictionary<int, int>();
             foreach (var myMove in reasonableMoves)
             {
