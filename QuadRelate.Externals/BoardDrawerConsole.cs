@@ -6,6 +6,8 @@ namespace QuadRelate.Externals
 {
     public class BoardDrawerConsole : IBoardDrawer
     {
+        private readonly char _counter = '@';
+
         public void DrawBoard(Board board)
         {
             Console.Clear();
@@ -38,7 +40,7 @@ namespace QuadRelate.Externals
                             case Counter.Red:
                                 Console.BackgroundColor = ConsoleColor.Red;
                                 Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write('\u20DD');
+                                Console.Write(_counter);
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
@@ -46,7 +48,7 @@ namespace QuadRelate.Externals
                             case Counter.Yellow:
                                 Console.BackgroundColor = ConsoleColor.Yellow;
                                 Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write('\u20DD');
+                                Console.Write(_counter);
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 break;
@@ -73,7 +75,7 @@ namespace QuadRelate.Externals
                     }
                 }
 
-                Console.Write("\n");
+                Console.Write(Environment.NewLine);
             }
         }
     }
