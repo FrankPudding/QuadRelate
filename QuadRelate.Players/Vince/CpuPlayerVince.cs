@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using QuadRelate.Contracts;
 using QuadRelate.Models;
@@ -8,10 +9,14 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerVince : IPlayer
     {
+        private Counter _currentColour;
+
         public string Name => "Invincible";
 
         public int NextMove(Board board, Counter colour)
         {
+            _currentColour = colour;
+
             var available = board.AvailableColumns();
 
             // 1. If only one possible move - play it.
@@ -49,6 +54,14 @@ namespace QuadRelate.Players.Vince
             }
 
             return scores.FirstOrDefault(x => x.Value == scores.Values.Max()).Key;
+        }
+
+        public void GameOver(GameResult result)
+        {
+            if (result.Winner != _currentColour)
+            {
+                Debug.WriteLine(string.Join('.', result.Moves));
+            }
         }
     } 
 }

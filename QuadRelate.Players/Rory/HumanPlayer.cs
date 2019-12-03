@@ -25,5 +25,10 @@ namespace QuadRelate.Players.Rory
 
             return inputInt - 1;
         }
+
+        public void GameOver(GameResult result)
+        {
+            // Ignore.
+        }
     }
 }

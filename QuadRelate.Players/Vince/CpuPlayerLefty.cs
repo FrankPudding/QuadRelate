@@ -12,5 +12,10 @@ namespace QuadRelate.Players.Vince
         {
             return board.AvailableColumns()[0];
         }
+
+        public void GameOver(GameResult result)
+        {
+            // Ignore.
+        }
     }
 }

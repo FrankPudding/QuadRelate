@@ -11,7 +11,7 @@ namespace QuadRelate.Players.Vince
             if (pattern.Length > line.Count) return 0;
 
             var count = 0;
-            for (var start = 0; start < line.Count - pattern.Length; start++)
+            for (var start = 0; start < line.Count - pattern.Length+1; start++)
             {
                 if (IsMatch(line, pattern, start))
                     count++;
