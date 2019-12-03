@@ -17,4 +17,8 @@
     <ProjectReference Include="..\QuadRelate.Models\QuadRelate.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Wilko\" />
+  </ItemGroup>
+
 </Project>

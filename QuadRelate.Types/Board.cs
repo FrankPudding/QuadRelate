@@ -1,11 +1,14 @@
-﻿namespace QuadRelate.Types
+﻿using System.Collections.Generic;
+
+namespace QuadRelate.Types
 {
     public class Board
     {
         public static readonly int Width = 7;
         public static readonly int Height = 6;
-
         private readonly Counter[,] _position = new Counter[Width, Height];
+
+        List<int> _moves = new List<int>();
 
         public Counter this[int x, int y]
         {
@@ -13,6 +16,8 @@
 
             set => _position[x, y] = value;
         }
+
+        public IReadOnlyCollection<int> Moves => _moves.AsReadOnly();
 
         public Board Clone()
         {
@@ -49,6 +54,7 @@
                 if (this[column, y] == Counter.Empty)
                 {
                     this[column, y] = counter;
+                    _moves.Add(column);
                     break;
                 }
             }
