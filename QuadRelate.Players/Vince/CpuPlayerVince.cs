@@ -70,15 +70,14 @@ namespace QuadRelate.Players.Vince
 
             if (!reasonableMoves.Any())
             {
-                reasonableMoves = availableMoves; // All moves lead to a potential loss.
-                Debug.WriteLine("I lose!");
+                // All moves lead to a potential loss.
+                reasonableMoves = availableMoves;
             }
 
             // 6. ScoreEvaluator.
             var scores = new Dictionary<int, int>();
             foreach (var myMove in reasonableMoves)
             {
-                var myTotal = 0;
                 var opponentTotal = 0;
                 var clone = board.Clone();
                 clone.PlaceCounter(myMove, colour);
@@ -88,16 +87,15 @@ namespace QuadRelate.Players.Vince
                     var innerClone = clone.Clone();
                     innerClone.PlaceCounter(opponentMove, opponent);
                     opponentTotal += ScoreEvaluator.GetScore(innerClone, opponent);
-                    myTotal += myScore;
                 }
                 
-                scores.Add(myMove, myTotal - opponentTotal);
+                scores.Add(myMove, myScore - (opponentTotal / clone.AvailableColumns().Count));
             }
 
             Debug.WriteLine(string.Join('.', scores));
-            var keys = scores.Where(x => x.Value == scores.Values.Max()).ToList();
+            var bestScores = scores.Where(x => x.Value == scores.Values.Max()).ToList();
 
-            return keys[_randomizer.Next(keys.Count)].Key;
+            return bestScores[_randomizer.Next(bestScores.Count)].Key;
         }
 
         public void GameOver(GameResult result)
