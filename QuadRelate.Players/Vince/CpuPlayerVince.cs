@@ -9,7 +9,7 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerVince : IPlayer
     {
-        private const int _centreColumn = 4;
+        private const int _centreColumn = 3;
         private Counter _currentColour;
 
         public string Name => "Invincible";
