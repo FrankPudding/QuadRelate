@@ -61,6 +61,7 @@ namespace QuadRelate.Models
         {
             var board = new Board();
             var score = new Score();
+            var moves = new List<int>();
 
             board.Fill(Counter.Empty);
             _boardDrawer.DrawBoard(board);
@@ -69,6 +70,7 @@ namespace QuadRelate.Models
             while (!board.IsGameOver())
             {
                 var move = playerOne.NextMove(board.Clone(), Counter.Yellow);
+                moves.Add(move);
                 board.PlaceCounter(move, Counter.Yellow);
                 _boardDrawer.DrawBoard(board);
 
@@ -78,11 +80,15 @@ namespace QuadRelate.Models
                     _messageWriter.WriteMessage(message);
 
                     score.PlayerOne = 1;
+                    var result = new GameResult(Counter.Yellow, moves);
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
 
                     return score;
                 }
 
                 move = playerTwo.NextMove(board.Clone(), Counter.Red);
+                moves.Add(move);
                 board.PlaceCounter(move, Counter.Red);
                 _boardDrawer.DrawBoard(board);
 
@@ -94,12 +100,20 @@ namespace QuadRelate.Models
                     _messageWriter.WriteMessage(message);
 
                     if (isWin)
+                    {
                         score.PlayerTwo = 1;
+                        var result = new GameResult(Counter.Red, moves);
+                        playerOne.GameOver(result);
+                        playerTwo.GameOver(result);
+                    }
                     else
                     {
                         score.PlayerOne = 0.5f;
                         score.PlayerTwo = 0.5f;
-                    } 
+                        var result = new GameResult(Counter.Empty, moves);
+                        playerOne.GameOver(result);
+                        playerTwo.GameOver(result);
+                    }
 
                     return score;
                 }

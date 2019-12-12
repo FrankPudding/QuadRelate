@@ -84,5 +84,10 @@ namespace QuadRelate.Players.Rory
             // Failsafe that shouldn't be used
             return availableColumns[0];
         }
+
+        public void GameOver(GameResult result)
+        {
+            // Ignore.
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace QuadRelate.Contracts
         string Name { get; }
 
         int NextMove(Board board, Counter colour);
+
+        void GameOver(GameResult result);
     }
 }

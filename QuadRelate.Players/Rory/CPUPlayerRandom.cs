@@ -21,5 +21,10 @@ namespace QuadRelate.Players.Rory
 
             return board.AvailableColumns()[index];
         }
+
+        public void GameOver(GameResult result)
+        {
+            // Ignore.
+        }
     }
 }
