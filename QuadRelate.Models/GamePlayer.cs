@@ -16,6 +16,47 @@ namespace QuadRelate.Models
             _messageWriter = messageWriter;
         }
 
+        private Score PlayGame(IPlayer playerOne, IPlayer playerTwo)
+        {
+            var board = new Board();
+            var score = new Score();
+
+            board.Fill(Counter.Empty);
+
+            while (!board.IsGameOver())
+            {
+                var move = playerOne.NextMove(board.Clone(), Counter.Yellow);
+                board.PlaceCounter(move, Counter.Yellow);
+
+                if (board.IsGameOver())
+                {
+                    score.PlayerOne = 1;
+
+                    return score;
+                }
+
+                move = playerTwo.NextMove(board.Clone(), Counter.Red);
+                board.PlaceCounter(move, Counter.Red);
+
+                if (board.IsGameOver())
+                {
+                    var isWin = board.DoesWinnerExist();
+
+                    if (isWin)
+                        score.PlayerTwo = 1;
+                    else
+                    {
+                        score.PlayerOne = 0.5f;
+                        score.PlayerTwo = 0.5f;
+                    }
+
+                    return score;
+                }
+            }
+
+            throw new InvalidOperationException("Game not handled");
+        }
+
         public Score PlayOneGame(IPlayer playerOne, IPlayer playerTwo)
         {
             var board = new Board();
@@ -75,7 +116,7 @@ namespace QuadRelate.Models
 
             for (var i = 0; i < numberOfGames; i++)
             {
-                var gameScore = PlayOneGame(yellowPlayer, redPlayer);
+                var gameScore = PlayGame(yellowPlayer, redPlayer);
 
                 if (i % 2 == 0)
                 {
