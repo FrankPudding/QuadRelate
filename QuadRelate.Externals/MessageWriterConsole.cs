@@ -5,9 +5,14 @@ namespace QuadRelate.Externals
 {
     public class MessageWriterConsole : IMessageWriter
     {
-        public void WriteMessage(string message)
+        public void WriteLine(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public void Write(string message)
+        {
+            Console.Write(message);
         }
     }
 }
