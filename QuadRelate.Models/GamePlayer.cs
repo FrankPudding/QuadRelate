@@ -20,22 +20,28 @@ namespace QuadRelate.Models
         {
             var board = new Board();
             var score = new Score();
+            var moves = new List<int>();
 
             board.Fill(Counter.Empty);
 
             while (!board.IsGameOver())
             {
                 var move = playerOne.NextMove(board.Clone(), Counter.Yellow);
+                moves.Add(move);
                 board.PlaceCounter(move, Counter.Yellow);
 
                 if (board.IsGameOver())
                 {
                     score.PlayerOne = 1;
+                    var result = new GameResult(Counter.Yellow, moves);
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
 
                     return score;
                 }
 
                 move = playerTwo.NextMove(board.Clone(), Counter.Red);
+                moves.Add(move);
                 board.PlaceCounter(move, Counter.Red);
 
                 if (board.IsGameOver())
@@ -43,11 +49,19 @@ namespace QuadRelate.Models
                     var isWin = board.DoesWinnerExist();
 
                     if (isWin)
+                    {
                         score.PlayerTwo = 1;
+                        var result = new GameResult(Counter.Red, moves);
+                        playerOne.GameOver(result);
+                        playerTwo.GameOver(result);
+                    }
                     else
                     {
                         score.PlayerOne = 0.5f;
                         score.PlayerTwo = 0.5f;
+                        var result = new GameResult(Counter.Empty, moves);
+                        playerOne.GameOver(result);
+                        playerTwo.GameOver(result);
                     }
 
                     return score;
@@ -131,6 +145,12 @@ namespace QuadRelate.Models
             for (var i = 0; i < numberOfGames; i++)
             {
                 var gameScore = PlayGame(yellowPlayer, redPlayer);
+
+                if (i % 10 == 0 && i % 100 != 0)
+                    _messageWriter.WriteMessage($".");
+
+                if (i != 0 && i % 100 == 0)
+                    _messageWriter.WriteMessage($"{totalScore.PlayerOne} : {totalScore.PlayerTwo}\n");
 
                 if (i % 2 == 0)
                 {

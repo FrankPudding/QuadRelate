@@ -1,15 +1,21 @@
 ﻿using QuadRelate.Contracts;
 using QuadRelate.Models;
 using QuadRelate.Types;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace QuadRelate.Players.Rory
 {
     public class CpuPlayer02 : IPlayer
     {
+        private Counter _currentColour;
+        private const int _middleColumn = 3;
+
         public string Name => "Not So Fast Swaggy";
 
         public int NextMove(Board board, Counter colour)
         {
+            _currentColour = colour;
             var availableColumns = board.AvailableColumns();
 
             // Play only move available
@@ -53,10 +59,16 @@ namespace QuadRelate.Players.Rory
                     return move;
             }
 
-            var nonLosingMoves = availableColumns;
+            // Play middle column if first move
+            if (board[_middleColumn, 0] == Counter.Empty)
+            {
+                return _middleColumn;
+            }
+
+            var nonLosingMoves = new List<int>(availableColumns);
 
             // Don't play moves that allow the opponent to win
-            foreach (var move in availableColumns.ToArray())
+            foreach (var move in availableColumns)
             {
                 boardClone = board.Clone();
 
@@ -87,7 +99,10 @@ namespace QuadRelate.Players.Rory
 
         public void GameOver(GameResult result)
         {
-            // Ignore.
+            if (result.Winner == _currentColour.Invert())
+            {
+                Debug.WriteLine(string.Join('.', result.Moves));
+            }
         }
     }
 }
