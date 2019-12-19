@@ -36,6 +36,9 @@ namespace QuadRelate.Models
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
                     score.PlayerOne = 1;
+                    var result = new GameResult(Counter.Yellow, moves);
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
 
                     return score;
                 }
@@ -51,13 +54,17 @@ namespace QuadRelate.Models
                     if (isWin)
                     {
                         score.PlayerTwo = 1;
-                        result = new GameResult(Counter.Red, moves);
+                        var result = new GameResult(Counter.Red, moves);
+                        playerOne.GameOver(result);
+                        playerTwo.GameOver(result);
                     }
                     else
                     {
                         score.PlayerOne = 0.5f;
                         score.PlayerTwo = 0.5f;
-                        result = new GameResult(Counter.Empty, moves);
+                        var result = new GameResult(Counter.Empty, moves);
+                        playerOne.GameOver(result);
+                        playerTwo.GameOver(result);
                     }
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
@@ -143,6 +150,12 @@ namespace QuadRelate.Models
             for (var i = 0; i < numberOfGames; i++)
             {
                 var gameScore = PlayGame(yellowPlayer, redPlayer);
+
+                if (i % 10 == 0 && i % 100 != 0)
+                    _messageWriter.WriteMessage($".");
+
+                if (i != 0 && i % 100 == 0)
+                    _messageWriter.WriteMessage($"{totalScore.PlayerOne} : {totalScore.PlayerTwo}\n");
 
                 if (i % 2 == 0)
                 {

@@ -12,8 +12,8 @@ namespace QuadRelateApp
             var messageWriter = AppContainer.Resolve<IMessageWriter>();
             var gamePlayer = AppContainer.Resolve<IGamePlayer>();
             var factory = AppContainer.Resolve<IPlayerFactory>();
-            var playerOne = factory.CreatePlayer(nameof(CpuPlayer02));
-            var playerTwo = factory.CreatePlayer(nameof(CpuPlayerVince));
+            var playerOne = factory.CreatePlayer(nameof(CpuPlayerVince));
+            var playerTwo = factory.CreatePlayer(nameof(CpuPlayer02));
 
             messageWriter.WriteLine($"'{playerOne.Name}' vs '{playerTwo.Name}'");
 

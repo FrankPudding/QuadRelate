@@ -7,7 +7,14 @@ namespace QuadRelate.Externals
     {
         public void WriteLine(string message)
         {
-            Console.WriteLine(message);
+            Console.Write(message);
+        }
+
+        public void ClearLine()
+        {
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            Console.Write(new string(' ', Console.BufferWidth));
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
         }
 
         public void Write(string message)
