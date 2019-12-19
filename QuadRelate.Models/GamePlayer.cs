@@ -32,6 +32,9 @@ namespace QuadRelate.Models
 
                 if (board.IsGameOver())
                 {
+                    var result = new GameResult(Counter.Yellow, moves);
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
                     score.PlayerOne = 1;
                     var result = new GameResult(Counter.Yellow, moves);
                     playerOne.GameOver(result);
@@ -46,8 +49,8 @@ namespace QuadRelate.Models
 
                 if (board.IsGameOver())
                 {
+                    GameResult result;
                     var isWin = board.DoesWinnerExist();
-
                     if (isWin)
                     {
                         score.PlayerTwo = 1;
@@ -63,6 +66,8 @@ namespace QuadRelate.Models
                         playerOne.GameOver(result);
                         playerTwo.GameOver(result);
                     }
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
 
                     return score;
                 }
@@ -79,7 +84,7 @@ namespace QuadRelate.Models
 
             board.Fill(Counter.Empty);
             _boardDrawer.DrawBoard(board);
-            _messageWriter.WriteMessage($"'{playerOne.Name}' vs '{playerTwo.Name}'");
+            _messageWriter.WriteLine($"'{playerOne.Name}' vs '{playerTwo.Name}'");
 
             while (!board.IsGameOver())
             {
@@ -91,7 +96,7 @@ namespace QuadRelate.Models
                 if (board.IsGameOver())
                 {
                     var message = $"YELLOW WINS! ('{playerOne.Name}')";
-                    _messageWriter.WriteMessage(message);
+                    _messageWriter.WriteLine(message);
 
                     score.PlayerOne = 1;
                     var result = new GameResult(Counter.Yellow, moves);
@@ -111,7 +116,7 @@ namespace QuadRelate.Models
                     var isWin = board.DoesWinnerExist();
 
                     var message = isWin ? $"RED WINS! ('{playerTwo.Name}')" : "DRAW!";
-                    _messageWriter.WriteMessage(message);
+                    _messageWriter.WriteLine(message);
 
                     if (isWin)
                     {
@@ -166,7 +171,12 @@ namespace QuadRelate.Models
                 var tempPlayer = yellowPlayer;
                 yellowPlayer = redPlayer;
                 redPlayer = tempPlayer;
+
+                if (i % 10 == 0)
+                    _messageWriter.Write(".");
             }
+
+            _messageWriter.WriteLine(".");
 
             return totalScore;
         }

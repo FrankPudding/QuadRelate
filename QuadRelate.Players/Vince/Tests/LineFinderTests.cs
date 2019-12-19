@@ -31,7 +31,7 @@ namespace QuadRelate.Players.Vince.Tests
             Assert.Equal(7, lines[1].Count);
             Assert.Equal(7, lines[2].Count);
             Assert.Equal(7, lines[3].Count);
-            Assert.Equal(7, lines[4].Count);;
+            Assert.Equal(7, lines[4].Count);
             Assert.Equal(7, lines[5].Count);
 
             Assert.Equal(Counter.Yellow, lines[0][0]);
@@ -53,7 +53,7 @@ namespace QuadRelate.Players.Vince.Tests
             Assert.Equal(6, lines[7].Count);
             Assert.Equal(6, lines[8].Count);
             Assert.Equal(6, lines[9].Count);
-            Assert.Equal(6, lines[10].Count);;
+            Assert.Equal(6, lines[10].Count);
             Assert.Equal(6, lines[11].Count);
             Assert.Equal(6, lines[12].Count);
             
