@@ -100,6 +100,7 @@ namespace QuadRelate.Models
 
                     return score;
                 }
+                Console.ReadKey();
 
                 move = playerTwo.NextMove(board.Clone(), Counter.Red);
                 moves.Add(move);
@@ -131,6 +132,7 @@ namespace QuadRelate.Models
 
                     return score;
                 }
+                Console.ReadKey();
             }
 
             throw new InvalidOperationException("Game not handled");
