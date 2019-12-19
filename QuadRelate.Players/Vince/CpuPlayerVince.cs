@@ -92,7 +92,7 @@ namespace QuadRelate.Players.Vince
                 scores.Add(myMove, myScore - (opponentTotal / clone.AvailableColumns().Count));
             }
 
-            Debug.WriteLine(string.Join('.', scores));
+            //Debug.WriteLine(string.Join('.', scores));
             var bestScores = scores.Where(x => x.Value == scores.Values.Max()).ToList();
 
             return bestScores[_randomizer.Next(bestScores.Count)].Key;

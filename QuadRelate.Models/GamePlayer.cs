@@ -32,8 +32,11 @@ namespace QuadRelate.Models
 
                 if (board.IsGameOver())
                 {
-                    score.PlayerOne = 1;
                     var result = new GameResult(Counter.Yellow, moves);
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
+                    score.PlayerOne = 1;
+                    result = new GameResult(Counter.Yellow, moves);
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
 
@@ -46,12 +49,12 @@ namespace QuadRelate.Models
 
                 if (board.IsGameOver())
                 {
+                    GameResult result;
                     var isWin = board.DoesWinnerExist();
-
                     if (isWin)
                     {
                         score.PlayerTwo = 1;
-                        var result = new GameResult(Counter.Red, moves);
+                        result = new GameResult(Counter.Red, moves);
                         playerOne.GameOver(result);
                         playerTwo.GameOver(result);
                     }
@@ -59,10 +62,12 @@ namespace QuadRelate.Models
                     {
                         score.PlayerOne = 0.5f;
                         score.PlayerTwo = 0.5f;
-                        var result = new GameResult(Counter.Empty, moves);
+                        result = new GameResult(Counter.Empty, moves);
                         playerOne.GameOver(result);
                         playerTwo.GameOver(result);
                     }
+                    playerOne.GameOver(result);
+                    playerTwo.GameOver(result);
 
                     return score;
                 }
@@ -168,7 +173,12 @@ namespace QuadRelate.Models
                 var tempPlayer = yellowPlayer;
                 yellowPlayer = redPlayer;
                 redPlayer = tempPlayer;
+
+                if (i % 10 == 0)
+                    _messageWriter.Write(".");
             }
+
+            _messageWriter.WriteMessage(".");
 
             return totalScore;
         }
