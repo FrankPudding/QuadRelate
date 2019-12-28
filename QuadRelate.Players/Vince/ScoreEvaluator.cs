@@ -10,7 +10,6 @@ namespace QuadRelate.Players.Vince
         private const int _middleOpenThree = 16;
         private const int _fullyOpenTwo = 8;
         private const int _halfOpenTwo = 4;
-        private const int _middleOpenTwo = 2;
 
         public static int GetScore(Board board, Counter colour)
         {
@@ -36,8 +35,6 @@ namespace QuadRelate.Players.Vince
                 score += count * _halfOpenTwo;
                 count = PatternMatcher.CountMatches(line, new[] { Counter.Empty, colour, colour });
                 score += count * _halfOpenTwo;
-                count = PatternMatcher.CountMatches(line, new[] { colour, Counter.Empty, colour });
-                score += count * _middleOpenTwo;
             }
             return score;
         }
