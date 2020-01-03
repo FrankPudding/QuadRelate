@@ -15,12 +15,12 @@ namespace QuadRelateApp
             var playerOne = factory.CreatePlayer(nameof(CpuPlayerVince));
             var playerTwo = factory.CreatePlayer(nameof(CpuPlayer02));
 
-            messageWriter.WriteMessage($"'{playerOne.Name}' vs '{playerTwo.Name}'");
+            messageWriter.WriteMessage($"'{playerOne.Name}' vs '{playerTwo.Name}'\n");
 
             var score = gamePlayer.PlayMultipleGames(playerOne, playerTwo, 1000);
             //var score = gamePlayer.PlayOneGame(playerOne, playerTwo);
 
-            messageWriter.WriteMessage($"'{playerOne.Name}' {score.PlayerOne} : {score.PlayerTwo} '{playerTwo.Name}'");
+            messageWriter.WriteMessage($"\n'{playerOne.Name}' {score.PlayerOne} : {score.PlayerTwo} '{playerTwo.Name}'\n");
         }
     }
 }

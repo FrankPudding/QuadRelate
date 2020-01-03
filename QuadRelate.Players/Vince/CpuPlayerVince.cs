@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using QuadRelate.Contracts;
 using QuadRelate.Models;
@@ -11,7 +10,6 @@ namespace QuadRelate.Players.Vince
     {
         private readonly IRandomizer _randomizer;
         private const int _centreColumn = 3;
-        private Counter _currentColour;
 
         public string Name => "Invincible";
 
@@ -22,8 +20,6 @@ namespace QuadRelate.Players.Vince
 
         public int NextMove(Board board, Counter colour)
         {
-            _currentColour = colour;
-
             var availableMoves = board.AvailableColumns();
 
             // 1. If only one possible move - play it.
@@ -93,17 +89,37 @@ namespace QuadRelate.Players.Vince
             }
 
             //Debug.WriteLine(string.Join('.', scores));
-            var bestScores = scores.Where(x => x.Value == scores.Values.Max()).ToList();
+            var bestScores = scores.Where(x => x.Value == scores.Values.Max());
+            var bestMoves = bestScores.Select(x => x.Key).ToList();
 
-            return bestScores[_randomizer.Next(bestScores.Count)].Key;
+            return GetMoveClosestToCentre(bestMoves);
         }
 
         public void GameOver(GameResult result)
         {
-            if (result.Winner == _currentColour.Invert())
+            //if (result.Winner == _currentColour.Invert())
+            //{
+            //    Debug.WriteLine(string.Join('.', result.Moves));
+            //}
+        }
+
+        private int GetMoveClosestToCentre(IList<int> moves)
+        {
+            for (var offset = 0; offset <= 3; offset++)
             {
-                Debug.WriteLine(string.Join('.', result.Moves));
+                var move = _centreColumn - offset;
+                if (moves.Contains(move))
+                    return move;
+
+                if (offset == 0)
+                    continue;
+
+                move = _centreColumn + offset;
+                if (moves.Contains(move))
+                    return move;
             }
+
+            return moves[_randomizer.Next(moves.Count)];
         }
     } 
 }
