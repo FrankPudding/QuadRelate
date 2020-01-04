@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using QuadRelate.Contracts;
 using QuadRelate.Models;
@@ -26,11 +25,17 @@ namespace QuadRelate.Players.Vince
 
             // 1. If only one possible move - play it.
             if (availableMoves.Count == 1)
+            {
+                Log($"Only move possible: {availableMoves[0]}");
                 return availableMoves[0];
+            }
 
             // 2. Starting moves.
             if (MovesHelper.TryGetOpeningMove(board, colour, out var opening))
+            {
+                Log($"Opening move: {opening}");
                 return opening;
+            }
 
             // 3. If there's a winning move - play it.
             foreach (var myMove in availableMoves)
@@ -38,7 +43,10 @@ namespace QuadRelate.Players.Vince
                 var clone = board.Clone();
                 clone.PlaceCounter(myMove, colour);
                 if (clone.IsGameOver())
+                {
+                    Log($"Winning move: {myMove}");
                     return myMove;
+                }
             }
 
             // 4. If there's a blocking move - play it.
@@ -48,12 +56,36 @@ namespace QuadRelate.Players.Vince
                 var clone = board.Clone();
                 clone.PlaceCounter(opponentMove, opponent);
                 if (clone.IsGameOver())
+                {
+                    Log($"Blocking move: {opponentMove}");
                     return opponentMove;
+                }
             }
 
             // 5. ScoreEvaluator.
+            var scores = GetScores(board, colour);
+
+            var bestScores = scores.Where(x => x.Value == scores.Values.Max());
+            var bestMoves = bestScores.Select(x => x.Key).ToList();
+
+            var centreMoves = MovesHelper.GetMovesClosestToCentre(bestMoves);
+            var move = centreMoves[_randomizer.Next(centreMoves.Count)];
+            Log("{string.Join('.', scores)}: Chose {move}");
+            return move;
+        }
+
+        public void GameOver(GameResult result)
+        {
+            if (result.Winner == _currentColour.Invert())
+            {
+                Log(string.Join('.', result.Moves));
+            }
+        }
+
+        private static IDictionary<int, int> GetScores(Board board, Counter colour)
+        {
             var scores = new Dictionary<int, int>();
-            foreach (var myMove in availableMoves)
+            foreach (var myMove in board.AvailableColumns())
             {
                 var opponentTotal = 0;
                 var clone = board.Clone();
@@ -62,27 +94,20 @@ namespace QuadRelate.Players.Vince
                 foreach (var opponentMove in clone.AvailableColumns())
                 {
                     var innerClone = clone.Clone();
-                    innerClone.PlaceCounter(opponentMove, opponent);
-                    opponentTotal += ScoreEvaluator.GetScore(innerClone, opponent);
+                    innerClone.PlaceCounter(opponentMove, colour.ReverseCounter());
+                    opponentTotal += ScoreEvaluator.GetScore(innerClone, colour.ReverseCounter());
                 }
 
                 scores.Add(myMove, myScore - (opponentTotal / clone.AvailableColumns().Count));
             }
 
-            //Debug.WriteLine(string.Join('.', scores));
-            var bestScores = scores.Where(x => x.Value == scores.Values.Max());
-            var bestMoves = bestScores.Select(x => x.Key).ToList();
-
-            var centreMoves = MovesHelper.GetMovesClosestToCentre(bestMoves);
-            return centreMoves[_randomizer.Next(centreMoves.Count)];
+            return scores;
         }
 
-        public void GameOver(GameResult result)
+        private static void Log(string message)
         {
-            if (result.Winner == _currentColour.Invert())
-            {
-                Debug.WriteLine(string.Join('.', result.Moves));
-            }
+            var _ = message;
+            //Debug.WriteLine(message);
         }
     } 
 }
