@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using QuadRelate.Contracts;
 using QuadRelate.Models;
@@ -9,7 +10,7 @@ namespace QuadRelate.Players.Vince
     public class CpuPlayerVince : IPlayer
     {
         private readonly IRandomizer _randomizer;
-        private const int _centreColumn = 3;
+        private Counter _currentColour;
 
         public string Name => "Invincible";
 
@@ -20,15 +21,16 @@ namespace QuadRelate.Players.Vince
 
         public int NextMove(Board board, Counter colour)
         {
+            _currentColour = colour;
             var availableMoves = board.AvailableColumns();
 
             // 1. If only one possible move - play it.
             if (availableMoves.Count == 1)
                 return availableMoves[0];
 
-            // 2. Start in centre.
-            if (board[_centreColumn, 0] == Counter.Empty || board[_centreColumn, 1] == Counter.Empty)
-                return _centreColumn;
+            // 2. Starting moves.
+            if (MovesHelper.TryGetOpeningMove(board, colour, out var opening))
+                return opening;
 
             // 3. If there's a winning move - play it.
             foreach (var myMove in availableMoves)
@@ -49,30 +51,9 @@ namespace QuadRelate.Players.Vince
                     return opponentMove;
             }
 
-            // 5. Check if opponent can win after this move.
-            var reasonableMoves = new List<int>(availableMoves);
-            foreach (var myMove in availableMoves)
-            {
-                var clone = board.Clone();
-                clone.PlaceCounter(myMove, colour);
-                foreach (var opponentMove in clone.AvailableColumns())
-                {
-                    var innerClone = clone.Clone();
-                    innerClone.PlaceCounter(opponentMove, opponent);
-                    if (innerClone.IsGameOver())
-                        reasonableMoves.Remove(myMove);
-                }
-            }
-
-            if (!reasonableMoves.Any())
-            {
-                // All moves lead to a potential loss.
-                reasonableMoves = availableMoves;
-            }
-
-            // 6. ScoreEvaluator.
+            // 5. ScoreEvaluator.
             var scores = new Dictionary<int, int>();
-            foreach (var myMove in reasonableMoves)
+            foreach (var myMove in availableMoves)
             {
                 var opponentTotal = 0;
                 var clone = board.Clone();
@@ -84,7 +65,7 @@ namespace QuadRelate.Players.Vince
                     innerClone.PlaceCounter(opponentMove, opponent);
                     opponentTotal += ScoreEvaluator.GetScore(innerClone, opponent);
                 }
-                
+
                 scores.Add(myMove, myScore - (opponentTotal / clone.AvailableColumns().Count));
             }
 
@@ -92,34 +73,16 @@ namespace QuadRelate.Players.Vince
             var bestScores = scores.Where(x => x.Value == scores.Values.Max());
             var bestMoves = bestScores.Select(x => x.Key).ToList();
 
-            return GetMoveClosestToCentre(bestMoves);
+            var centreMoves = MovesHelper.GetMovesClosestToCentre(bestMoves);
+            return centreMoves[_randomizer.Next(centreMoves.Count)];
         }
 
         public void GameOver(GameResult result)
         {
-            //if (result.Winner == _currentColour.Invert())
-            //{
-            //    Debug.WriteLine(string.Join('.', result.Moves));
-            //}
-        }
-
-        private int GetMoveClosestToCentre(IList<int> moves)
-        {
-            for (var offset = 0; offset <= 3; offset++)
+            if (result.Winner == _currentColour.Invert())
             {
-                var move = _centreColumn - offset;
-                if (moves.Contains(move))
-                    return move;
-
-                if (offset == 0)
-                    continue;
-
-                move = _centreColumn + offset;
-                if (moves.Contains(move))
-                    return move;
+                Debug.WriteLine(string.Join('.', result.Moves));
             }
-
-            return moves[_randomizer.Next(moves.Count)];
         }
     } 
 }
