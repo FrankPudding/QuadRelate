@@ -32,11 +32,8 @@ namespace QuadRelate.Models
 
                 if (board.IsGameOver())
                 {
-                    var result = new GameResult(Counter.Yellow, moves);
-                    playerOne.GameOver(result);
-                    playerTwo.GameOver(result);
                     score.PlayerOne = 1;
-                    result = new GameResult(Counter.Yellow, moves);
+                    var result = new GameResult(Counter.Yellow, moves);
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
 
@@ -55,16 +52,12 @@ namespace QuadRelate.Models
                     {
                         score.PlayerTwo = 1;
                         result = new GameResult(Counter.Red, moves);
-                        playerOne.GameOver(result);
-                        playerTwo.GameOver(result);
                     }
                     else
                     {
                         score.PlayerOne = 0.5f;
                         score.PlayerTwo = 0.5f;
                         result = new GameResult(Counter.Empty, moves);
-                        playerOne.GameOver(result);
-                        playerTwo.GameOver(result);
                     }
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);

@@ -4,12 +4,10 @@ namespace QuadRelate.Players.Vince
 {
     internal static class ScoreEvaluator
     {
-        private const int _four = 9999;
+        private const int _four = 1024;
         private const int _fullyOpenThree = 64;
         private const int _halfOpenThree = 32;
         private const int _middleOpenThree = 16;
-        private const int _fullyOpenTwo = 8;
-        private const int _halfOpenTwo = 4;
 
         public static int GetScore(Board board, Counter colour)
         {
@@ -29,12 +27,6 @@ namespace QuadRelate.Players.Vince
                 score += count * _middleOpenThree;
                 count = PatternMatcher.CountMatches(line, new[] { colour, colour, Counter.Empty, colour });
                 score += count * _middleOpenThree;
-                count = PatternMatcher.CountMatches(line, new[] { Counter.Empty, colour, colour, Counter.Empty });
-                score += count * _fullyOpenTwo;
-                count = PatternMatcher.CountMatches(line, new[] { colour, colour, Counter.Empty });
-                score += count * _halfOpenTwo;
-                count = PatternMatcher.CountMatches(line, new[] { Counter.Empty, colour, colour });
-                score += count * _halfOpenTwo;
             }
             return score;
         }
