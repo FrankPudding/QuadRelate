@@ -75,7 +75,7 @@ namespace QuadRelate.Players.Vince.Helpers
 
         public override int GetHashCode(Cell cell)
         {
-            return cell.X.GetHashCode() + cell.Y.GetHashCode();
+            return cell.X.GetHashCode() + (cell.Y*7).GetHashCode();
         }
     }
 }
