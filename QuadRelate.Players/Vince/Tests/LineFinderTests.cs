@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using QuadRelate.Models;
+using QuadRelate.Players.Vince.Helpers;
 using QuadRelate.Types;
 using Xunit;
 

@@ -1,4 +1,5 @@
-﻿using QuadRelate.Types;
+﻿using QuadRelate.Players.Vince.Helpers;
+using QuadRelate.Types;
 using Xunit;
 
 namespace QuadRelate.Players.Vince.Tests
