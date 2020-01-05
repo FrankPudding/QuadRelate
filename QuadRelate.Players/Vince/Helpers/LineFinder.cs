@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using QuadRelate.Types;
 
-namespace QuadRelate.Players.Vince
+namespace QuadRelate.Players.Vince.Helpers
 {
     internal static class LineFinder
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using QuadRelate.Types;
 
-namespace QuadRelate.Players.Vince
+namespace QuadRelate.Players.Vince.Helpers
 {
     internal static class PatternMatcher
     {

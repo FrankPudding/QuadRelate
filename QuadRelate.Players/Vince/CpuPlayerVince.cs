@@ -2,6 +2,7 @@
 using System.Linq;
 using QuadRelate.Contracts;
 using QuadRelate.Models;
+using QuadRelate.Players.Vince.Helpers;
 using QuadRelate.Types;
 
 namespace QuadRelate.Players.Vince
@@ -21,55 +22,17 @@ namespace QuadRelate.Players.Vince
         public int NextMove(Board board, Counter colour)
         {
             _currentColour = colour;
-            var availableMoves = board.AvailableColumns();
 
-            // 1. If only one possible move - play it.
-            if (availableMoves.Count == 1)
-            {
-                Log($"Only move possible: {availableMoves[0]}");
-                return availableMoves[0];
-            }
+            if (MovesHelper.TryGetBasicMove(board, colour, out var move))
+                return move;
 
-            // 2. Starting moves.
-            if (MovesHelper.TryGetOpeningMove(board, colour, out var opening))
-            {
-                Log($"Opening move: {opening}");
-                return opening;
-            }
-
-            // 3. If there's a winning move - play it.
-            foreach (var myMove in availableMoves)
-            {
-                var clone = board.Clone();
-                clone.PlaceCounter(myMove, colour);
-                if (clone.IsGameOver())
-                {
-                    Log($"Winning move: {myMove}");
-                    return myMove;
-                }
-            }
-
-            // 4. If there's a blocking move - play it.
-            var opponent = colour.Invert();
-            foreach (var opponentMove in availableMoves)
-            {
-                var clone = board.Clone();
-                clone.PlaceCounter(opponentMove, opponent);
-                if (clone.IsGameOver())
-                {
-                    Log($"Blocking move: {opponentMove}");
-                    return opponentMove;
-                }
-            }
-
-            // 5. ScoreEvaluator.
             var scores = GetScores(board, colour);
 
             var bestScores = scores.Where(x => x.Value == scores.Values.Max());
             var bestMoves = bestScores.Select(x => x.Key).ToList();
 
             var centreMoves = MovesHelper.GetMovesClosestToCentre(bestMoves);
-            var move = centreMoves[_randomizer.Next(centreMoves.Count)];
+            move = centreMoves[_randomizer.Next(centreMoves.Count)];
             Log("{string.Join('.', scores)}: Chose {move}");
             return move;
         }

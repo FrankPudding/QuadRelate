@@ -1,5 +1,4 @@
 ﻿using QuadRelate.Types;
-using System.Collections.Generic;
 
 namespace QuadRelate.Contracts
 {
