@@ -8,10 +8,12 @@ namespace QuadRelate.Factories
     public class PlayerFactory : IPlayerFactory
     {
         private readonly IRandomizer _randomizer;
+        private readonly IGameRepository _gameRepository;
 
-        public PlayerFactory(IRandomizer randomizer)
+        public PlayerFactory(IRandomizer randomizer, IGameRepository gameRepository)
         {
             _randomizer = randomizer;
+            _gameRepository = gameRepository;
         }
 
         public IPlayer CreatePlayer(string playerType)
@@ -27,6 +29,7 @@ namespace QuadRelate.Factories
                 case nameof(CpuPlayerLefty): return new CpuPlayerLefty();
                 case nameof(CpuPlayer01): return new CpuPlayer01();
                 case nameof(CpuPlayer02): return new CpuPlayer02();
+                case nameof(CPUPlayer03): return new CPUPlayer03(_randomizer, _gameRepository);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(playerType), "That player does not exist");
             }

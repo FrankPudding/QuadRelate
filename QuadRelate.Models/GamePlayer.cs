@@ -96,6 +96,8 @@ namespace QuadRelate.Models
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
 
+                    Console.ReadKey();
+
                     return score;
                 }
 
@@ -126,6 +128,8 @@ namespace QuadRelate.Models
                         playerOne.GameOver(result);
                         playerTwo.GameOver(result);
                     }
+
+                    Console.ReadKey();
 
                     return score;
                 }
@@ -164,12 +168,7 @@ namespace QuadRelate.Models
                 var tempPlayer = yellowPlayer;
                 yellowPlayer = redPlayer;
                 redPlayer = tempPlayer;
-
-                if (i % 10 == 0)
-                    _messageWriter.Write(".");
             }
-
-            _messageWriter.WriteMessage(".");
 
             return totalScore;
         }

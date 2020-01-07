@@ -7,7 +7,7 @@ namespace QuadRelate.Externals
     {
         public void WriteMessage(string message)
         {
-            Console.Write(message);
+            Console.WriteLine(message);
         }
 
         public void ClearLine()
