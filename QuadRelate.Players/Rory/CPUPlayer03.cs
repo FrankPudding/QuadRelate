@@ -12,12 +12,14 @@ namespace QuadRelate.Players.Rory
         private Counter _currentColour;
         private const int _middleColumn = 3;
         private readonly IRandomizer _randomizer;
+        private readonly IGameRepository _gameRepository;
 
         public string Name => "Swag Master General";
 
-        public CPUPlayer03(IRandomizer randomizer)
+        public CPUPlayer03(IRandomizer randomizer, IGameRepository gameRepository)
         {
             _randomizer = randomizer;
+            _gameRepository = gameRepository;
         }
 
         public int NextMove(Board board, Counter colour)
@@ -74,9 +76,11 @@ namespace QuadRelate.Players.Rory
 
         public void GameOver(GameResult result)
         {
+            //_gameRepository.SaveGame(result, "GameList.txt");
+
             if (result.Winner == _currentColour.Invert())
             {
-                Debug.WriteLine(string.Join('.', result.Moves));
+                //Debug.WriteLine(string.Join('.', result.Moves));
             }
         }
     }

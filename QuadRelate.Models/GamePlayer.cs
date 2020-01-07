@@ -103,9 +103,10 @@ namespace QuadRelate.Models
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
 
+                    Console.ReadKey();
+
                     return score;
                 }
-                Console.ReadKey();
 
                 move = playerTwo.NextMove(board.Clone(), Counter.Red);
                 moves.Add(move);
@@ -135,9 +136,10 @@ namespace QuadRelate.Models
                         playerTwo.GameOver(result);
                     }
 
+                    Console.ReadKey();
+
                     return score;
                 }
-                Console.ReadKey();
             }
 
             throw new InvalidOperationException("Game not handled");
@@ -173,12 +175,7 @@ namespace QuadRelate.Models
                 var tempPlayer = yellowPlayer;
                 yellowPlayer = redPlayer;
                 redPlayer = tempPlayer;
-
-                if (i % 10 == 0)
-                    _messageWriter.Write(".");
             }
-
-            _messageWriter.WriteMessage(".");
 
             return totalScore;
         }

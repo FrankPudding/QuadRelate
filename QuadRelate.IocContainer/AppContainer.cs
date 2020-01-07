@@ -30,6 +30,8 @@ namespace QuadRelate.IocContainer
             builder.RegisterType<BoardDrawerConsole>().As<IBoardDrawer>();
             builder.RegisterType<Randomizer>().As<IRandomizer>();
             builder.RegisterType<MessageWriterConsole>().As<IMessageWriter>();
+            builder.RegisterType<GameRepository>().As<IGameRepository>();
+            builder.RegisterType<FileReaderWriter>().As<IFileReaderWriter>();
         }
 
         public static T Resolve<T>()
