@@ -23,9 +23,9 @@ public class FileReaderWriter : IFileReaderWriter
         }
     }
 
-    public void WriteAllLines(string filepath, IEnumerable<string> lines)
+    public void WriteAllLines(string filepath, IEnumerable<string> lines, bool append = false)
     {
-        using (var streamWriter = new StreamWriter(filepath))
+        using (var streamWriter = new StreamWriter(filepath, append))
         {
             foreach (var line in lines)
             {

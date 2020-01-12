@@ -6,7 +6,7 @@ namespace QuadRelate.Contracts
     {
         IEnumerable<string> ReadAllLines(string filepath);
 
-        void WriteAllLines(string filepath, IEnumerable<string> lines);
+        void WriteAllLines(string filepath, IEnumerable<string> lines, bool append = false);
 
         void WriteLine(string filepath, string line);
     }

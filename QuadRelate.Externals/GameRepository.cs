@@ -8,25 +8,25 @@ namespace QuadRelate.Externals
     public class GameRepository : IGameRepository
     {
         private readonly IFileReaderWriter _fileReaderWriter;
+        private readonly ISerializer _serializer;
 
-        public GameRepository(IFileReaderWriter fileReaderWriter)
+        public GameRepository(IFileReaderWriter fileReaderWriter, ISerializer serializer)
         {
             _fileReaderWriter = fileReaderWriter;
+            _serializer = serializer;
         }
 
         public IEnumerable<GameResult> LoadGames(string fileName)
         {
+            var previousGamesJson = _fileReaderWriter.ReadAllLines(fileName);
 
-
-            throw new System.NotImplementedException();
+            return _serializer.Deserialize<GameResult>(previousGamesJson);
         }
 
         public void SaveGame(GameResult gameResult, string fileName)
         {
-            var sb = new StringBuilder();
-
-            sb.Append(gameResult.Winner);
-            _fileReaderWriter.WriteLine(fileName, sb.ToString());
+            var text = _serializer.Serialize(gameResult);
+            _fileReaderWriter.WriteAllLines(fileName, new[] { text }, append:true);
         }
     }
 }

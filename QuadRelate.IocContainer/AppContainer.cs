@@ -25,6 +25,7 @@ namespace QuadRelate.IocContainer
 
             // Models
             builder.RegisterType<GamePlayer>().As<IGamePlayer>();
+            builder.RegisterType<Serializer>().As<ISerializer>();
 
             // Externals
             builder.RegisterType<BoardDrawerConsole>().As<IBoardDrawer>();
