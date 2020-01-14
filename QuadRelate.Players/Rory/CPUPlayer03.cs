@@ -11,6 +11,7 @@ namespace QuadRelate.Players.Rory
     {
         private Counter _currentColour;
         private const int _middleColumn = 3;
+        private const string _fileName = "GameList.json";
         private readonly IRandomizer _randomizer;
         private readonly IGameRepository _gameRepository;
 
@@ -20,6 +21,7 @@ namespace QuadRelate.Players.Rory
         {
             _randomizer = randomizer;
             _gameRepository = gameRepository;
+            var previousGames = _gameRepository.LoadGames(_fileName);
         }
 
         public int NextMove(Board board, Counter colour)
@@ -76,7 +78,7 @@ namespace QuadRelate.Players.Rory
 
         public void GameOver(GameResult result)
         {
-            //_gameRepository.SaveGame(result, "GameList.txt");
+            _gameRepository.SaveGame(result, _fileName);
 
             if (result.Winner == _currentColour.Invert())
             {
