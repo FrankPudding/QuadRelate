@@ -15,7 +15,8 @@ namespace QuadRelate.Tests
         public PlayerFactoryTests()
         {
             var randomizer = new Mock<IRandomizer>();
-            _playerFactory = new PlayerFactory(randomizer.Object);
+            var gameRepository = new Mock<IGameRepository>();
+            _playerFactory = new PlayerFactory(randomizer.Object, gameRepository.Object);
         }
         
         [Theory]

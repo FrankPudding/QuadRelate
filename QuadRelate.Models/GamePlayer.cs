@@ -9,11 +9,13 @@ namespace QuadRelate.Models
     {
         private readonly IBoardDrawer _boardDrawer;
         private readonly IMessageWriter _messageWriter;
+        private readonly IAsyncRepository _asyncRepository;
 
-        public GamePlayer(IBoardDrawer boardDrawer, IMessageWriter messageWriter)
+        public GamePlayer(IBoardDrawer boardDrawer, IMessageWriter messageWriter, IAsyncRepository asyncRepository)
         {
             _boardDrawer = boardDrawer;
             _messageWriter = messageWriter;
+            _asyncRepository = asyncRepository;
         }
 
         private Score PlayGame(IPlayer playerOne, IPlayer playerTwo)
@@ -36,7 +38,7 @@ namespace QuadRelate.Models
                     var result = new GameResult(Counter.Yellow, moves);
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
-
+                    _asyncRepository.SaveGameAsync(result).ConfigureAwait(true);
                     return score;
                 }
 
@@ -61,6 +63,7 @@ namespace QuadRelate.Models
                     }
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
+                    _asyncRepository.SaveGameAsync(result).ConfigureAwait(true);
 
                     return score;
                 }

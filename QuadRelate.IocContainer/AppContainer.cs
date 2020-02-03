@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using QuadRelate.Cloud;
 using QuadRelate.Contracts;
 using QuadRelate.Externals;
 using QuadRelate.Factories;
@@ -33,6 +34,7 @@ namespace QuadRelate.IocContainer
             builder.RegisterType<MessageWriterConsole>().As<IMessageWriter>();
             builder.RegisterType<GameRepository>().As<IGameRepository>();
             builder.RegisterType<FileReaderWriter>().As<IFileReaderWriter>();
+            builder.RegisterType<CloudRepository>().As<IAsyncRepository>();
         }
 
         public static T Resolve<T>()

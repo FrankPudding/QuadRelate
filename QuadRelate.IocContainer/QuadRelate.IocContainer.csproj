@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QuadRelate.Cloud\QuadRelate.Cloud.csproj" />
     <ProjectReference Include="..\QuadRelate.Externals\QuadRelate.Externals.csproj" />
     <ProjectReference Include="..\QuadRelate.Factories\QuadRelate.Factories.csproj" />
     <ProjectReference Include="..\QuadRelate.Players\QuadRelate.Players.csproj" />
