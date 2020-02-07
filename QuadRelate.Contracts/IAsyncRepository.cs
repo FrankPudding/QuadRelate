@@ -5,7 +5,7 @@ namespace QuadRelate.Contracts
 {
     public interface IAsyncRepository
     {
-        Task SaveGameAsync(GameResult gameResult);
+        Task SaveGameAsync(Board board, Counter winner);
 
         Task CloseAsync();
     }

@@ -38,7 +38,7 @@ namespace QuadRelate.Models
                     var result = new GameResult(Counter.Yellow, moves);
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
-                    _asyncRepository.SaveGameAsync(result).ConfigureAwait(true);
+                    _asyncRepository.SaveGameAsync(board, Counter.Yellow).ConfigureAwait(true);
                     return score;
                 }
 
@@ -63,7 +63,7 @@ namespace QuadRelate.Models
                     }
                     playerOne.GameOver(result);
                     playerTwo.GameOver(result);
-                    _asyncRepository.SaveGameAsync(result).ConfigureAwait(true);
+                    _asyncRepository.SaveGameAsync(board, result.Winner).ConfigureAwait(true);
 
                     return score;
                 }
