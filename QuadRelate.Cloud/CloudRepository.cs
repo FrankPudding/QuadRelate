@@ -1,18 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using QuadRelate.Contracts;
 using QuadRelate.Types;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace QuadRelate.Cloud
 {
-    public class CloudRepository : IAsyncRepository
+    public class CloudRepository : IResultsRepository
     {
         private readonly IBoardHasher _boardHasher;
 
-        private const string _connectionString =
+        private const string _serviceBusConnectionString =
             "Endpoint=sb://quadrelate.servicebus.windows.net/;SharedAccessKeyName=SendSharedAccessKey;SharedAccessKey=17vuo4JO0brvVp284TY+6/csQxR1fM2lVPa14fpIKwM=";
+        private const string _storageConnectionString =
+            "DefaultEndpointsProtocol=https;AccountName=quadrelate;AccountKey=Qg5fkHFg0tsNAdpE5ZEdqfbbYx2Un9WixMV99lUI5qxen2To/oJbtwDBOeV9n71Q0IzydCEV920EMb1AX5mCMw==;EndpointSuffix=core.windows.net";
 
+        private const string _queuePath = "results";
         private QueueClient _queueClient;
 
         public CloudRepository(IBoardHasher boardHasher)
@@ -22,61 +28,46 @@ namespace QuadRelate.Cloud
 
         public async Task SaveGameAsync(Board board, Counter winner)
         {
-            var queuePath = QueuePath(winner);
-            
             if (_queueClient == null)
-                _queueClient = new QueueClient(_connectionString, queuePath);
+                _queueClient = new QueueClient(_serviceBusConnectionString, _queuePath);
 
-            var hash = _boardHasher.GetBoardHash(board);
-            var bytes = ConvertToBytes(hash);
+            var text = _boardHasher.GetHash(winner) + _boardHasher.GetHash(board);
+            var bytes = Encoding.UTF8.GetBytes(text);
             var message = new Message(bytes);
 
             await _queueClient.SendAsync(message).ConfigureAwait(false);
         }
 
-        public IEnumerable<GameResult> LoadGames()
+        public async Task<IEnumerable<BoardResult>> GetPreviousResultsAsync()
         {
-            return new GameResult[0];
+            var storageAccount = CloudStorageAccount.Parse(_storageConnectionString);
+            var tableClient = storageAccount.CreateCloudTableClient();
+            var table = tableClient.GetTableReference("Result");
+
+            var entities = new List<ResultEntity>();
+            TableContinuationToken token = null;
+            do
+            {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(new TableQuery<ResultEntity>(), token);
+                entities.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
+
+            var results = new List<BoardResult>();
+            foreach (var e in entities)
+            {
+                if (e.Winner != " ")
+                    results.Add(new BoardResult { Board = e.Board, Winner = e.Winner });
+            }
+
+            return results;
         }
 
         public async Task CloseAsync()
         {
             await _queueClient.CloseAsync().ConfigureAwait(false);
+
             _queueClient = null;
-        }
-
-        private static byte[] ConvertToBytes(IReadOnlyList<int> hash)
-        {
-            var bytes = new List<byte>();
-            foreach (var h in hash)
-            {
-                var b = ToBytes(h);
-                bytes.AddRange(b);
-            }
-
-            return bytes.ToArray();
-        }
-
-        private static byte[] ToBytes(int i)
-        {
-            byte[] result = new byte[4];
-
-            result[0] = (byte)(i >> 24);
-            result[1] = (byte)(i >> 16);
-            result[2] = (byte)(i >> 8);
-            result[3] = (byte)(i /*>> 0*/);
-
-            return result;
-        }
-
-        private static string QueuePath(Counter winner)
-        {
-            if (winner == Counter.Yellow)
-                return "yellow-wins";
-            if (winner == Counter.Red)
-                return "red-wins";
-
-            return "draws";
         }
     }
 }

@@ -16,7 +16,9 @@ namespace QuadRelate.Tests
         {
             var randomizer = new Mock<IRandomizer>();
             var gameRepository = new Mock<IGameRepository>();
-            _playerFactory = new PlayerFactory(randomizer.Object, gameRepository.Object);
+            var boardHasher = new Mock<IBoardHasher>();
+            var resultsRepository = new Mock<IResultsRepository>();
+            _playerFactory = new PlayerFactory(randomizer.Object, gameRepository.Object, boardHasher.Object, resultsRepository.Object);
         }
         
         [Theory]

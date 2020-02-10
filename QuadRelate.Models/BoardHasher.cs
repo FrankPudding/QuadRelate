@@ -1,4 +1,5 @@
-using System;
+using System.Linq;
+using System.Text;
 using QuadRelate.Contracts;
 using QuadRelate.Types;
 
@@ -6,67 +7,48 @@ namespace QuadRelate.Models
 {
     public class BoardHasher : IBoardHasher
     {
-        public int[] GetBoardHash(Board board)
-        {
-            var hash = new int[Board.Width];
-            for (var column = 0; column < Board.Width; column++)
-            {
-                hash[column] = GetColumnHash(board, column);
-            }
+        private const char _yellow = 'Y';
+        private const char _red = 'R';
+        private const char _empty = ' ';
 
-            return hash;
-        }
-
-        public int GetColumnHash(Board board, int column)
+        public string GetHash(Board board)
         {
-            var hashTotal = 0;
+            var hash = new StringBuilder();
             for (var row = 0; row < Board.Height; row++)
             {
-                var hash = GetCellHash(board[column, row]);
-                hashTotal += hash * (int)Math.Pow(3, row);
+                for (var column = 0; column < Board.Width; column++)
+                {
+                    hash.Append(GetHash(board[column, row]));
+                }
             }
 
-            return hashTotal;
+            return hash.ToString();
         }
-
-        public int GetCellHash(Counter counter)
+        
+        public char GetHash(Counter counter)
         {
-            if (counter == Counter.Yellow) return 1;
-            if (counter == Counter.Red) return 2;
-            return 0;
-        }
+            if (counter == Counter.Yellow) return _yellow;
+            if (counter == Counter.Red) return _red;
 
-        public bool IsSubset(int subset, int full)
-        {
-            var offset = 3;
-            while (subset > 0)
-            {
-                var s = subset % offset;
-                var f = full % offset;
-
-                if (s != f)
-                    return false;
-
-                subset -= s;
-                full -= f;
-
-                offset *= 3;
-            }
-
-            return true;
+            return _empty;
         }
 
         public bool IsSubset(Board subset, Board full)
         {
-            var subsetHash = GetBoardHash(subset);
-            var fullHash = GetBoardHash(full);
-            for (var column = 0; column < Board.Width; column++)
-            {
-                if (!IsSubset(subsetHash[column], fullHash[column]))
-                    return false;
-            }
+            return IsSubset(GetHash(subset), GetHash(full));
+        }
+        
+        public bool IsSubset(string subset, string full)
+        {
+            return !subset.Where((t, i) => !IsSubset(t, full[i])).Any();
+        }
 
-            return true;
+        public bool IsSubset(char subset, char full)
+        {
+            if (subset == _empty) return true;
+            if (full == _empty) return false;
+
+            return subset == full;
         }
     }
 }

@@ -4,11 +4,11 @@ namespace QuadRelate.Contracts
 {
     public interface IBoardHasher
     {
-        int[] GetBoardHash(Board board);
-        int GetColumnHash(Board board, int column);
-        int GetCellHash(Counter counter);
+        string GetHash(Board board);
+        char GetHash(Counter counter);
 
-        bool IsSubset(int hash1, int hash2);
         bool IsSubset(Board subset, Board full);
+        bool IsSubset(string subset, string full);
+        bool IsSubset(char subset, char full);
     }
 }

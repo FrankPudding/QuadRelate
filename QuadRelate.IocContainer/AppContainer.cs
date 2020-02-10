@@ -35,7 +35,7 @@ namespace QuadRelate.IocContainer
             builder.RegisterType<MessageWriterConsole>().As<IMessageWriter>();
             builder.RegisterType<GameRepository>().As<IGameRepository>();
             builder.RegisterType<FileReaderWriter>().As<IFileReaderWriter>();
-            builder.RegisterType<CloudRepository>().As<IAsyncRepository>();
+            builder.RegisterType<CloudRepository>().As<IResultsRepository>();
         }
 
         public static T Resolve<T>()
