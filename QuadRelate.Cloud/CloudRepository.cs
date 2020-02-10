@@ -14,9 +14,9 @@ namespace QuadRelate.Cloud
         private readonly IBoardHasher _boardHasher;
 
         private const string _serviceBusConnectionString =
-            "Endpoint=sb://quadrelate.servicebus.windows.net/;SharedAccessKeyName=SendSharedAccessKey;SharedAccessKey=17vuo4JO0brvVp284TY+6/csQxR1fM2lVPa14fpIKwM=";
+            "<>";
         private const string _storageConnectionString =
-            "DefaultEndpointsProtocol=https;AccountName=quadrelate;AccountKey=Qg5fkHFg0tsNAdpE5ZEdqfbbYx2Un9WixMV99lUI5qxen2To/oJbtwDBOeV9n71Q0IzydCEV920EMb1AX5mCMw==;EndpointSuffix=core.windows.net";
+            "<>";
 
         private const string _queuePath = "results";
         private QueueClient _queueClient;
