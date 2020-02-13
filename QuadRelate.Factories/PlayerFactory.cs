@@ -7,13 +7,11 @@ namespace QuadRelate.Factories
 {
     public class PlayerFactory : IPlayerFactory
     {
-        private readonly IRandomizer _randomizer;
-        private readonly IGameRepository _gameRepository;
+        private readonly IPlayerInitializer _playerInitializer;
 
-        public PlayerFactory(IRandomizer randomizer, IGameRepository gameRepository)
+        public PlayerFactory(IPlayerInitializer playerInitializer)
         {
-            _randomizer = randomizer;
-            _gameRepository = gameRepository;
+            _playerInitializer = playerInitializer;
         }
 
         public IPlayer CreatePlayer(string playerType)
@@ -21,15 +19,15 @@ namespace QuadRelate.Factories
             switch (playerType)
             {
                 case nameof(HumanPlayer): return new HumanPlayer();
-                case nameof(CpuPlayerRandom): return new CpuPlayerRandom(_randomizer);
-                case nameof(CpuPlayerVince): return new CpuPlayerVince(_randomizer);
-                case nameof(CpuPlayerCellEvaluator): return new CpuPlayerCellEvaluator(_randomizer);
-                case nameof(CpuPlayerRowDominator): return new CpuPlayerRowDominator(_randomizer);
-                case nameof(CpuPlayerCentre): return new CpuPlayerCentre(_randomizer);
-                case nameof(CpuPlayerLefty): return new CpuPlayerLefty();
-                case nameof(CpuPlayer01): return new CpuPlayer01();
-                case nameof(CpuPlayer02): return new CpuPlayer02();
-                case nameof(CPUPlayer03): return new CPUPlayer03(_randomizer, _gameRepository);
+                case nameof(CpuPlayerRandom): return new CpuPlayerRandom(_playerInitializer);
+                case nameof(CpuPlayerVince): return new CpuPlayerVince(_playerInitializer);
+                case nameof(CpuPlayerCellEvaluator): return new CpuPlayerCellEvaluator(_playerInitializer);
+                case nameof(CpuPlayerRowDominator): return new CpuPlayerRowDominator(_playerInitializer);
+                case nameof(CpuPlayerCentre): return new CpuPlayerCentre(_playerInitializer);
+                case nameof(CpuPlayerLefty): return new CpuPlayerLefty(_playerInitializer);
+                case nameof(CpuPlayer01): return new CpuPlayer01(_playerInitializer);
+                case nameof(CpuPlayer02): return new CpuPlayer02(_playerInitializer);
+                case nameof(CPUPlayer03): return new CPUPlayer03(_playerInitializer);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(playerType), "That player does not exist");
             }

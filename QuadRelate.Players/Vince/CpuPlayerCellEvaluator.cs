@@ -6,11 +6,11 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerCellEvaluator : IPlayer
     {
-        private readonly IRandomizer _randomizer;
+        private readonly IPlayerInitializer _playerInitializer;
 
-        public CpuPlayerCellEvaluator(IRandomizer randomizer)
+        public CpuPlayerCellEvaluator(IPlayerInitializer playerInitializer)
         {
-            _randomizer = randomizer;
+            _playerInitializer = playerInitializer;
         }
 
         public string Name => "Splintered Cell";
@@ -23,7 +23,7 @@ namespace QuadRelate.Players.Vince
             var cells = CellsHelper.GetPlayableCells(board);
             cells = CellsHelper.GetHighestScoringCells(cells);
 
-            return cells[_randomizer.Next(cells.Count)].X;
+            return cells[_playerInitializer.Randomizer.Next(cells.Count)].X;
         }
 
         public void GameOver(GameResult result)

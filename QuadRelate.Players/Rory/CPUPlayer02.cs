@@ -13,6 +13,13 @@ namespace QuadRelate.Players.Rory
 
         public string Name => "Not So Fast Swaggy";
 
+        private readonly IPlayerInitializer _playerInitializer;
+
+        public CpuPlayer02(IPlayerInitializer playerInitializer)
+        {
+            _playerInitializer = playerInitializer;
+        }
+
         public int NextMove(Board board, Counter colour)
         {
             _currentColour = colour;

@@ -8,6 +8,13 @@ namespace QuadRelate.Players.Vince
     {
         public string Name => "Lefty";
 
+        private readonly IPlayerInitializer _playerInitializer;
+
+        public CpuPlayerLefty(IPlayerInitializer playerInitializer)
+        {
+            _playerInitializer = playerInitializer;
+        }
+        
         public int NextMove(Board board, Counter colour)
         {
             return board.AvailableColumns()[0];

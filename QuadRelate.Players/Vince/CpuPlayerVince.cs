@@ -9,15 +9,16 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerVince : IPlayer
     {
-        private readonly IRandomizer _randomizer;
         private Counter _currentColour;
 
-        public string Name => "Invincible";
+        private readonly IPlayerInitializer _playerInitializer;
 
-        public CpuPlayerVince(IRandomizer randomizer)
+        public CpuPlayerVince(IPlayerInitializer playerInitializer)
         {
-            _randomizer = randomizer;
+            _playerInitializer = playerInitializer;
         }
+
+        public string Name => "Invincible";
 
         public int NextMove(Board board, Counter colour)
         {
@@ -32,7 +33,7 @@ namespace QuadRelate.Players.Vince
             var bestMoves = bestScores.Select(x => x.Key).ToList();
 
             var centreMoves = MovesHelper.GetMovesClosestToCentre(bestMoves);
-            move = centreMoves[_randomizer.Next(centreMoves.Count)];
+            move = centreMoves[_playerInitializer.Randomizer.Next(centreMoves.Count)];
             Log("{string.Join('.', scores)}: Chose {move}");
             return move;
         }

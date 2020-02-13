@@ -7,11 +7,11 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerCentre : IPlayer
     {
-        private readonly IRandomizer _randomizer;
+        private readonly IPlayerInitializer _playerInitializer;
 
-        public CpuPlayerCentre(IRandomizer randomizer)
+        public CpuPlayerCentre(IPlayerInitializer playerInitializer)
         {
-            _randomizer = randomizer;
+            _playerInitializer = playerInitializer;
         }
 
         public string Name => "The Centaur";
@@ -22,7 +22,7 @@ namespace QuadRelate.Players.Vince
                 return move;
             
             var centreMoves = MovesHelper.GetMovesClosestToCentre(board.AvailableColumns());
-            return centreMoves[_randomizer.Next(centreMoves.Count)];
+            return centreMoves[_playerInitializer.Randomizer.Next(centreMoves.Count)];
         }
 
         public void GameOver(GameResult result)
