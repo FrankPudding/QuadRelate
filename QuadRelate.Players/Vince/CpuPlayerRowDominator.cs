@@ -7,11 +7,11 @@ namespace QuadRelate.Players.Vince
 {
     public class CpuPlayerRowDominator : IPlayer
     {
-        private readonly IRandomizer _randomizer;
+        private readonly IPlayerInitializer _playerInitializer;
 
-        public CpuPlayerRowDominator(IRandomizer randomizer)
+        public CpuPlayerRowDominator(IPlayerInitializer playerInitializer)
         {
-            _randomizer = randomizer;
+            _playerInitializer = playerInitializer;
         }
 
         public string Name => "Row Dominator";
@@ -28,7 +28,7 @@ namespace QuadRelate.Players.Vince
                 filteredCells = cells.ToList();
             }
 
-            return filteredCells[_randomizer.Next(filteredCells.Count)].X;
+            return filteredCells[_playerInitializer.Randomizer.Next(filteredCells.Count)].X;
         }
 
         public void GameOver(GameResult result)

@@ -149,7 +149,7 @@ namespace QuadRelate.Models
                 var gameScore = PlayGame(yellowPlayer, redPlayer);
 
                 if (i % 10 == 0 && i % 100 != 0)
-                    _messageWriter.WriteMessage(".");
+                    _messageWriter.Write(".");
 
                 if (i != 0 && i % 100 == 0)
                     _messageWriter.WriteMessage($"{totalScore.PlayerOne} : {totalScore.PlayerTwo}\n");

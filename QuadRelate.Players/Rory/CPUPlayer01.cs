@@ -8,6 +8,13 @@ namespace QuadRelate.Players.Rory
     {
         public string Name => "Easy Swags";
 
+        private readonly IPlayerInitializer _playerInitializer;
+
+        public CpuPlayer01(IPlayerInitializer playerInitializer)
+        {
+            _playerInitializer = playerInitializer;
+        }
+
         public int NextMove(Board board, Counter colour)
         {
             // Play only move available
